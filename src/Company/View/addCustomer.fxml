@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="525.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Company.Controller.addCustomer">
+   <children>
+      <Pane layoutX="1.0" prefHeight="525.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="53.0" layoutY="48.0" prefHeight="26.0" prefWidth="131.0" text="Add Customer">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Label>
+            <Label layoutX="70.0" layoutY="106.0" text="ID" />
+            <Label layoutX="60.0" layoutY="157.0" text="Name" />
+            <Label layoutX="60.0" layoutY="202.0" text="Address" />
+            <Label layoutX="58.0" layoutY="254.0" text="Phone Number" />
+            <Label layoutX="60.0" layoutY="298.0" text="Country" />
+            <Label layoutX="60.0" layoutY="347.0" text="State/Province" />
+            <Label layoutX="60.0" layoutY="397.0" text="Postal Code" />
+            <TextField fx:id="customerID" disable="true" layoutX="166.0" layoutY="111.0" promptText="auto-generated" />
+            <TextField fx:id="customerName" layoutX="166.0" layoutY="153.0" />
+            <TextField fx:id="address" layoutX="166.0" layoutY="207.0" />
+            <ComboBox fx:id="country" layoutX="165.0" layoutY="294.0" prefWidth="150.0" />
+            <ComboBox fx:id="stateProvince" layoutX="165.0" layoutY="343.0" prefWidth="150.0" />
+            <TextField fx:id="postalCode" layoutX="166.0" layoutY="393.0" />
+            <TextField fx:id="phoneNumber" layoutX="166.0" layoutY="250.0" />
+            <Button fx:id="saveCustomer" layoutX="166.0" layoutY="451.0" mnemonicParsing="false" onAction="#saveOnClick" text="Save" />
+            <Button fx:id="cancelCustomer" layoutX="331.0" layoutY="451.0" mnemonicParsing="false" onAction="#cancelOnClick" text="Cancel" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

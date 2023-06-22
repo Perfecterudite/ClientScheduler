@@ -1,0 +1,6 @@
+2023-06-22 16:05:18 sqlUser unsuccessfully attempted to log in
+2023-06-22 16:50:18 Ayomide successfully logged in
+2023-06-22 16:50:34 Ayomide successfully logged in
+2023-06-22 17:00:02 Ayomide successfully logged in
+2023-06-22 17:06:10 Ayomide successfully logged in
+2023-06-22 17:06:17 Ayomide successfully logged in
