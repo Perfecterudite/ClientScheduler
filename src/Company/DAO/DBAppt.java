@@ -28,8 +28,8 @@ public class DBAppt {
             //String sqlgaa = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, customers.Customer_ID, users.User_ID contacts.Contact_ID, " +
                     //"FROM appointments, contacts, customers, users WHERE appointments.Customer_ID = customers.Customer_ID AND appointments.User_ID = users.User_ID AND appointments.Contact_ID = contacts.Contact_ID  ORDER BY Appointment_ID";
 
-            String sqlap = "SELECT * FROM appointments";
-            PreparedStatement ps = DatabaseConn.getConnection().prepareStatement(sqlap);
+            String sqlaap = "SELECT * FROM appointments";
+            PreparedStatement ps = DatabaseConn.getConnection().prepareStatement(sqlaap);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next())

@@ -61,12 +61,13 @@ public class LoginPage{
      * @throws IOException
      */
     public void switchScreen(ActionEvent event, String switchPath) throws IOException {
+        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+        Object scene = FXMLLoader.load(getClass().getResource(switchPath));
+        stage.setScene(new Scene((Parent) scene));
+        //Scene scene = new Scene(parent);
 
-        Parent parent = FXMLLoader.load(getClass().getResource(switchPath));
-        Scene scene = new Scene(parent);
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        window.setScene(scene);
-        window.show();
+        //window.setScene(scene);
+        stage.show();
 
 
     }
@@ -79,46 +80,52 @@ public class LoginPage{
      * @throws IOException
      * @throws SQLException
      */
-    public void loginClick(ActionEvent event) throws IOException, SQLException {
-        String userName = username.getText();
-        String passWord = password.getText();
+    public void loginClick(ActionEvent event) throws SQLException, IOException {
+        try {
+            String userName = username.getText();
+            String passWord = password.getText();
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime ldt = LocalDateTime.now();
-        String s = dtf.format(ldt);
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime ldt = LocalDateTime.now();
+            String s = dtf.format(ldt);
 
-        int userId = DBUsers.validateUser(userName, passWord);
+            int userId = DBUsers.validateUser(userName, passWord);
 
-        FileWriter fWriter = new FileWriter("login_activity.txt", true);
-        PrintWriter outputFile = new PrintWriter(fWriter);
+            FileWriter flWriter = new FileWriter("login_activity.txt", true);
+            PrintWriter outputFile = new PrintWriter(flWriter);
 
-        if (userId > 0)
-        {
 
-            outputFile.println(s + " " + username.getText() + " successfully logged in");
-            outputFile.close();
+            if (userId > 0) {
 
-            LocalDateTime now = LocalDateTime.now();
+                /**FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("View/homeScreen.fxml"));
+                Parent scene = loader.load();
+                Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(scene));
+                stage.show();**/
 
-            ObservableList<Appointments> aList = DBAppt.getAllAppointments();
-            ObservableList<Appointments> uList = aList.filtered(ap -> {   //lambda expression
+                switchScreen(event, "View/homeScreen.fxml");
 
-                if (ap.getUserID() == userId)
-                {
-                    return true;
-                }
-                return false;
 
-            });
+                outputFile.println(s + " " + username.getText() + " successfully logged in");
+                outputFile.close();
 
-            boolean name = false;
+                LocalDateTime now = LocalDateTime.now();
 
-            for (Appointments a : uList)
-            {
+                ObservableList<Appointments> aList = DBAppt.getAllAppointments();
+                ObservableList<Appointments> uList = aList.filtered(ap -> {   //lambda expression
 
-                {
-                    if (a.getStart().isAfter(now) && a.getStart().isBefore(now.plusMinutes(15)))
-                    {
+                    if (ap.getUserID() == userId) {
+                        return true;
+                    }
+                    return false;
+
+                });
+
+                boolean name = false;
+
+                for (Appointments a : uList) {
+                    if (a.getStart().isAfter(now) && a.getStart().isBefore(now.plusMinutes(15))) {
                         Alert alert3 = new Alert(Alert.AlertType.ERROR);
                         alert3.setHeaderText("UPCOMING APPOINTMENT");
                         alert3.setContentText("You have an appointment scheduled within the next 15 minutes: appointment " + a.getApptID() + " at " + a.getStart());
@@ -127,40 +134,62 @@ public class LoginPage{
                         name = true;
                     }
                 }
+
+                //}
+
+                if (!name) {
+                    Alert alert3 = new Alert(Alert.AlertType.ERROR);
+                    alert3.setHeaderText("NO UPCOMING APPOINTMENTS");
+                    alert3.setContentText("You have no appointments scheduled within the next 15 minutes.");
+                    alert3.showAndWait();
+                }
+
+
+                /**FXMLLoader loader = new FXMLLoader();
+                 loader.setLocation(getClass().getResource("homeScreen.fxml"));
+                 Parent scene = loader.load();
+                 Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
+                 stage.setScene(new Scene(scene));
+                 stage.show();
+
+
+                 /**
+                 Parent root = FXMLLoader.load(getClass().getResource("View/mainLogin.fxml"));
+                 primaryStage.setTitle("Scheduler");
+                 primaryStage.setScene(new Scene(root, 800, 575));
+                 primaryStage.show();
+
+
+
+                Stage window = (Stage) ((Button) event.getSource()).getScene().getWindow();
+                 Scene scene = FXMLLoader.load(getClass().getResource("View/homeScreen.fxml"));
+                 window.setScene((scene));
+                 window.show();**/
+                //switchScreen(event, "View/homeScreen.fxml");
+
+
+            } else if(userId < 0) {
+                outputFile.println(s + " " + username.getText() + " unsuccessfully attempted to log in");
+                outputFile.close();
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("Invalid Login Data");
+                alert.setContentText("Please Enter Valid Username and Password!");
+
+
+                Optional<ButtonType> result = alert.showAndWait();
+
+                if (result.isPresent() && result.get() == ButtonType.OK) {
+                    username.clear();
+                    password.clear();
+                }
             }
-
-            if (!name)
-            {
-                Alert alert3 = new Alert(Alert.AlertType.ERROR);
-                alert3.setHeaderText("NO UPCOMING APPOINTMENTS");
-                alert3.setContentText("You have no appointments scheduled within the next 15 minutes.");
-                alert3.showAndWait();
-            }
-
-
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = FXMLLoader.load(getClass().getResource("View/homeScreen.fxml"));
-            window.setScene((scene));
-            window.show();
         }
-        else
-        {
-            outputFile.println(s + " " + username.getText() + " unsuccessfully attempted to log in");
-            outputFile.close();
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText(invalidLoginData);
-            alert.setContentText(pleaseEnterValid);
-
-            Optional<ButtonType> result = alert.showAndWait();
-
-            if (result.isPresent() && result.get() == ButtonType.OK)
-            {
-                username.clear();
-                password.clear();
-            }
+        catch (IOException error) {
+            error.printStackTrace();
         }
     }
+                   //}catch(){
 
 
     /** This method exits the application.
@@ -168,7 +197,7 @@ public class LoginPage{
      * @param event clicking the exit button.
      */
     @FXML
-    void onActionExitApplication(ActionEvent event)
+    public void onActionExitApplication(ActionEvent event)
     {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(confirmSure);
@@ -205,8 +234,8 @@ public class LoginPage{
                 //switchLabelZoneId.setText((ZoneId.systemDefault()).getId());
                 confirmSure = rb.getString("confirmSure");
                 confirmExit = rb.getString("confirmExit");
-                invalidLoginData = rb.getString("invalidLoginData");
-                pleaseEnterValid = rb.getString("pleaseEnterValid");
+                //invalidLoginData = rb.getString("invalidLoginData");
+                //pleaseEnterValid = rb.getString("pleaseEnterValid");
             }
         }
         catch (Exception e)
