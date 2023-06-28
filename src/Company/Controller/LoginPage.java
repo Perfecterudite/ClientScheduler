@@ -61,13 +61,19 @@ public class LoginPage{
      * @throws IOException
      */
     public void switchScreen(ActionEvent event, String switchPath) throws IOException {
-        Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-        Object scene = FXMLLoader.load(getClass().getResource(switchPath));
-        stage.setScene(new Scene((Parent) scene));
-        //Scene scene = new Scene(parent);
+        try {
+            Parent scene = FXMLLoader.load(getClass().getResource(switchPath));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            //Scene = new Scene(scene);
+            stage.setScene(new Scene(scene));
+            //Scene scene = new Scene(parent);
 
-        //window.setScene(scene);
-        stage.show();
+            //window.setScene(scene);
+            stage.show();
+
+        }catch (Exception e){
+            System.out.println("can't load scene");
+        }
 
 
     }
@@ -104,7 +110,7 @@ public class LoginPage{
                 stage.setScene(new Scene(scene));
                 stage.show();**/
 
-                switchScreen(event, "View/homeScreen.fxml");
+                //switchScreen(event, ".../View/homeScreen.fxml ");
 
 
                 outputFile.println(s + " " + username.getText() + " successfully logged in");
@@ -165,7 +171,7 @@ public class LoginPage{
                  Scene scene = FXMLLoader.load(getClass().getResource("View/homeScreen.fxml"));
                  window.setScene((scene));
                  window.show();**/
-                //switchScreen(event, "View/homeScreen.fxml");
+                switchScreen(event, "homeScreen.fxml");
 
 
             } else if(userId < 0) {
