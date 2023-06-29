@@ -1,24 +1,26 @@
 package Company.Controller;
 
+import Company.Model.Appointments;
 import javafx.event.ActionEvent;
-import Company.Model.Report;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import java.net.URL;
+import Company.Model.Customers;
+import Company.DAO.DBCustomers;
+import Company.DAO.DBAppt;
+
 import java.util.*;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import java.io.IOException;
 
-public class HomeScreen {
+public class HomeScreen implements Initializable {
 
+    @FXML private TableView<Appointments> appointmentTable;
     @FXML private TableColumn <?, ?> apptIDCol;
     @FXML private TableColumn <?, ?> titleCol;
     @FXML private TableColumn <?, ?> typeCol;
@@ -27,6 +29,8 @@ public class HomeScreen {
     @FXML private TableColumn <?, ?> startCol;
     @FXML private TableColumn <?, ?> endCol;
     @FXML private TableColumn <?, ?> contactCol;
+
+    @FXML private TableView<Customers> customerTable;
     @FXML private TableColumn <?, ?> customer_IDCol;
     @FXML private TableColumn <?, ?> user_IDCol;
     @FXML private TableColumn <?, ?> postalCol;
@@ -52,7 +56,7 @@ public class HomeScreen {
 
     public void reportOnClick(ActionEvent event) throws IOException{
         Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(getClass().getResource("View/reports.fxml"));
+        Parent scene = FXMLLoader.load(getClass().getResource("reports.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
 
@@ -68,7 +72,7 @@ public class HomeScreen {
         if (result.isPresent() && result.get() == ButtonType.OK)
         {
             Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-            Parent scene = FXMLLoader.load(getClass().getResource("View/mainLogin.fxml"));
+            Parent scene = FXMLLoader.load(getClass().getResource(".../View/mainLogin.fxml"));
             stage.setScene(new Scene(scene));
             stage.show();
         }
@@ -77,7 +81,7 @@ public class HomeScreen {
 
     public void addApptOnClick(ActionEvent event) throws IOException{
         Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(getClass().getResource("addAppt.fxml"));
+        Parent scene = FXMLLoader.load(getClass().getResource("AddAppmt.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
 
@@ -109,6 +113,39 @@ public class HomeScreen {
     }
     public void deleteCustomerOnClick(ActionEvent event) throws IOException{
 
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle)
+    {
+
+        radioAll.setSelected(true);
+
+        apptIDCol.setCellValueFactory(new PropertyValueFactory<>("apptID"));
+        titleCol.setCellValueFactory(new PropertyValueFactory<>("apptTitle"));
+        desCol.setCellValueFactory(new PropertyValueFactory<>("apptDescription"));
+        locCol.setCellValueFactory(new PropertyValueFactory<>("apptLocation"));
+        contactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("apptType"));
+        startCol.setCellValueFactory(new PropertyValueFactory<>("apptStart"));
+        endCol.setCellValueFactory(new PropertyValueFactory<>("apptEnd"));
+        customer_IDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        user_IDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
+
+        appointmentTable.setItems(DBAppt.getAllAppointments());
+
+
+
+
+        customerIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        NameCol.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        addressCol.setCellValueFactory(new PropertyValueFactory<>("CustomerAddress"));
+        stateCol.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
+        postalCol.setCellValueFactory(new PropertyValueFactory<>("customerPostalCode"));
+        numberCol.setCellValueFactory(new PropertyValueFactory<>("customerPhoneNumber"));
+
+        customerTable.setItems(DBCustomers.getAllCustomers());
     }
 
 }

@@ -1,6 +1,7 @@
 package Company.Controller;
 
 
+import Company.Model.Appointments;
 import javafx.event.ActionEvent;
 import Company.DAO.DBAppt;
 import Company.DAO.DBUsers;
@@ -16,7 +17,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 
 
-import Company.Appointments;
 //import model.LogonSession;
 import java.sql.SQLException;
 import java.util.*;
@@ -61,7 +61,7 @@ public class LoginPage{
      * @throws IOException
      */
     public void switchScreen(ActionEvent event, String switchPath) throws IOException {
-        try {
+        //try {
             Parent scene = FXMLLoader.load(getClass().getResource(switchPath));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             //Scene = new Scene(scene);
@@ -71,9 +71,9 @@ public class LoginPage{
             //window.setScene(scene);
             stage.show();
 
-        }catch (Exception e){
+       /** }catch (Exception e){
             System.out.println("can't load scene");
-        }
+        }**/
 
 
     }

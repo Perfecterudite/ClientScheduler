@@ -22,12 +22,12 @@
             <Label layoutX="60.0" layoutY="202.0" text="Address" />
             <Label layoutX="58.0" layoutY="254.0" text="Phone Number" />
             <Label layoutX="60.0" layoutY="298.0" text="Country" />
-            <Label layoutX="60.0" layoutY="347.0" text="State/Province" />
+            <Label fx:id="divisionSwitch" layoutX="60.0" layoutY="347.0" text="State/Province" />
             <Label layoutX="60.0" layoutY="397.0" text="Postal Code" />
             <TextField fx:id="customerID" disable="true" layoutX="166.0" layoutY="111.0" promptText="auto-generated" />
             <TextField fx:id="customerName" layoutX="166.0" layoutY="153.0" />
             <TextField fx:id="address" layoutX="166.0" layoutY="207.0" />
-            <ComboBox fx:id="country" layoutX="165.0" layoutY="294.0" prefWidth="150.0" />
+            <ComboBox fx:id="countryBox" layoutX="165.0" layoutY="294.0" onAction="#divisionOnClick" prefWidth="150.0" />
             <ComboBox fx:id="stateProvince" layoutX="165.0" layoutY="343.0" prefWidth="150.0" />
             <TextField fx:id="postalCode" layoutX="166.0" layoutY="393.0" />
             <TextField fx:id="phoneNumber" layoutX="166.0" layoutY="250.0" />

@@ -1,4 +1,4 @@
-package Company;
+package Company.Model;
 import java.time.LocalDateTime;
 
 public class Appointments {
@@ -13,8 +13,8 @@ public class Appointments {
     public int userID;
     public int contactID;
 
-    public Appointments(int apptID,String apptTitle, String apptDescription, String apptLocation, String apptType,
-    LocalDateTime apptStart, LocalDateTime apptEnd, int customerID, int userID, int contactID){
+    public Appointments(int apptID, String apptTitle, String apptDescription, String apptLocation, String apptType,
+                        LocalDateTime apptStart, LocalDateTime apptEnd, int customerID, int userID, int contactID){
         this.apptID = apptID;
         this.apptTitle = apptTitle;
         this.apptDescription = apptDescription;

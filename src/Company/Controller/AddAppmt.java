@@ -4,7 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class addAppt {
+public class AddAppmt {
+
     @FXML private TextField Appointment_ID;
     @FXML private TextField title;
     @FXML private TextField location;
@@ -18,7 +19,8 @@ public class addAppt {
     @FXML private ComboBox<String> customer_ID;
     @FXML private ComboBox<String> contact;
     @FXML private Button saveAddAppt;
-    @FXML private Button cancelAddAppt;
+    @FXML private Button cancelAppt;
+
 
     public void saveApptOnClick(ActionEvent actionEvent){
 
@@ -28,3 +30,4 @@ public class addAppt {
 
     }
 }
+

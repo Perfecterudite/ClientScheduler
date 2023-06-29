@@ -2,7 +2,7 @@ package Company.DAO;
 
 import Company.ConnectionDB.DatabaseConn;
 //import Company.Appointments;
-import Company.Appointments;
+import Company.Model.Appointments;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

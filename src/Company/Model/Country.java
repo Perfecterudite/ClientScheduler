@@ -17,10 +17,20 @@ public class Country {
     public String getCountryName() {
         return countryName;
     }
-
-    public void setCountryID(){
+    /**public void setCountryID(){
         this.countryID = countryID;
-    } public void setCountryName(){
+    }
+    public void setCountryName(){
         this.countryName = countryName;
+    }**/
+
+
+    /**
+     * @return returns a name for the country for use in the combobox
+     */
+    @Override
+    public String toString()
+    {
+        return (countryName);
     }
 }

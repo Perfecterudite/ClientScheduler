@@ -29,11 +29,8 @@
                   <TableColumn fx:id="reportLocCol" prefWidth="64.0" text="Location" />
                   <TableColumn fx:id="reportStartCol" prefWidth="101.0" text="Start Date/Time" />
                   <TableColumn fx:id="reportEndCol" prefWidth="92.0" text="End Date/Time" />
-<<<<<<< HEAD
                   <TableColumn fx:id="reportContactCol" prefWidth="58.0" text="Contact" />
-=======
                   <TableColumn fx:id="reportContactColl" prefWidth="58.0" text="Contact" />
->>>>>>> Perfecterudite/master
                   <TableColumn fx:id="reportCusIDCol" prefWidth="97.0" text="Customer ID" />
                </columns>
             </TableView>
