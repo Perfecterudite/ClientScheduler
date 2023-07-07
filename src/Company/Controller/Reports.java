@@ -1,5 +1,6 @@
 package Company.Controller;
 
+import Company.DAO.DBCountries;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -10,9 +11,13 @@ import javafx.scene.control.TableView;
 
 import Company.DAO.DBAppt;
 import Company.DAO.DBContacts;
-//import Company.DAO.DBReport;
+//import Company.DAO.DBCountries;
 import Company.Model.Contacts;
+import Company.Model.Country;
 import Company.Model.Appointments;
+import Company.Model.Report;
+import Company.Model.ReportType;
+import Company.Model.ReportMonth;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -47,9 +52,9 @@ public class Reports{
     @FXML private TableColumn <?, ?> totalApptCol;
     @FXML private TableColumn <?, ?> divisionNameCol;
     @FXML private TableColumn <?, ?> totalCusCol;
-    //@FXML private TableView<Company.Model.Report> reportsTable;
-    //@FXML private TableView<Company.Model.Report> reportsTypeTable;
-    //@FXML private TableView<Company.Model.Report> reportsDivTable;
+    @FXML private TableView<Appointments> reportsTable;
+    @FXML private TableView<ReportType> reportsTypeTable;
+    @FXML private TableView<ReportMonth> reportsDivTable;
     @FXML private Button backBtn;
     @FXML private Button logoutBtn;
 
@@ -64,6 +69,7 @@ public class Reports{
         reportTypeCol.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
         reportStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
         reportEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        divisionNameCol.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
         reportCusIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         reportContactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
         apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
@@ -74,7 +80,7 @@ public class Reports{
         ObservableList<Contacts> contactsObservableList = DBContacts.getAllContacts();
         ObservableList<String> allContactsNames = FXCollections.observableArrayList();
         contactsObservableList.forEach(contacts -> allContactsNames.add(contacts.getContactName()));
-        contactScheduleContactBox.setItems(allContactsNames);
+        selectContact.setItems(allContactsNames);
 
     }
 
@@ -84,7 +90,7 @@ public class Reports{
      */
     @FXML
     public void appointmentDataByContact() {
-        try {
+        //try {
 
             int contactID = 0;
 
@@ -94,11 +100,11 @@ public class Reports{
 
             Appointments contactAppointmentInfo;
 
-            String contactName = contactScheduleContactBox.getSelectionModel().getSelectedItem();
+            String contactName = selectContact.getSelectionModel().getSelectedItem();
 
             for (Contacts contact: getAllContacts) {
                 if (contactName.equals(contact.getContactName())) {
-                    contactID = contact.getId();
+                    contactID = contact.getContactID();
                 }
             }
 
@@ -108,11 +114,11 @@ public class Reports{
                     appointmentInfo.add(contactAppointmentInfo);
                 }
             }
-            allAppointmentsTable.setItems(appointmentInfo);
+            reportsTable.setItems(appointmentInfo);
 
-        } catch (SQLException throwables) {
+        /**} catch (SQLException throwables) {
             throwables.printStackTrace();
-        }
+        }**/
     }
 
     /**
@@ -134,13 +140,13 @@ public class Reports{
 
             //IDE converted to Lambda
             getAllAppointments.forEach(appointments -> {
-                appointmentType.add(appointments.getAppointmentType());
+                appointmentType.add(appointments.getApptType());
             });
 
             //IDE converted to Lambda
-            getAllAppointments.stream().map(appointment -> {
+            /**getAllAppointments.stream().map(appointment -> {
                 return appointment.getStart().getMonth();
-            }).forEach(appointmentMonths::add);
+            }).forEach(appointmentMonths::add);**/
 
             //IDE converted to Lambda
             appointmentMonths.stream().filter(month -> {
@@ -148,7 +154,7 @@ public class Reports{
             }).forEach(monthOfAppointments::add);
 
             for (Appointments appointments: getAllAppointments) {
-                String appointmentsAppointmentType = appointments.getAppointmentType();
+                String appointmentsAppointmentType = appointments.getApptType();
                 if (!uniqueAppointment.contains(appointmentsAppointmentType)) {
                     uniqueAppointment.add(appointmentsAppointmentType);
                 }
@@ -160,7 +166,7 @@ public class Reports{
                 ReportMonth appointmentMonth = new ReportMonth(monthName, totalMonth);
                 reportMonths.add(appointmentMonth);
             }
-            appointmentTotalAppointmentByMonth.setItems(reportMonths);
+            reportsDivTable.setItems(reportMonths);
 
             for (String type: uniqueAppointment) {
                 String typeToSet = type;
@@ -168,30 +174,10 @@ public class Reports{
                 ReportType appointmentTypes = new ReportType(typeToSet, typeTotal);
                 reportType.add(appointmentTypes);
             }
-            appointmentTotalsAppointmentType.setItems(reportType);
+            reportsTypeTable.setItems(reportType);
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Custom report to display number of appointments in each Country.
-     * @throws SQLException
-     */
-    public void customerByCountry() throws SQLException {
-        try {
-
-            ObservableList<Reports> aggregatedCountries = reportAccess.getCountries();
-            ObservableList<Reports> countriesToAdd = FXCollections.observableArrayList();
-
-            //IDE converted
-            aggregatedCountries.forEach(countriesToAdd::add);
-
-            customerByCountry.setItems(countriesToAdd);
-
-        } catch (Exception exception) {
-            exception.printStackTrace();
         }
     }
 
