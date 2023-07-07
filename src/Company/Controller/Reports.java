@@ -62,13 +62,13 @@ public class Reports{
 
     public void initialize() throws SQLException {
 
-        reportIDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
-        reportTitleCol.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
-        reportDesCol.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
-        reportLocCol.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
-        reportTypeCol.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
-        reportStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
-        reportEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        reportIDCol.setCellValueFactory(new PropertyValueFactory<>("apptID"));
+        reportTitleCol.setCellValueFactory(new PropertyValueFactory<>("apptTitle"));
+        reportDesCol.setCellValueFactory(new PropertyValueFactory<>("apptDescription"));
+        reportLocCol.setCellValueFactory(new PropertyValueFactory<>("apptLocation"));
+        reportTypeCol.setCellValueFactory(new PropertyValueFactory<>("apptType"));
+        reportStartCol.setCellValueFactory(new PropertyValueFactory<>("apptStart"));
+        reportEndCol.setCellValueFactory(new PropertyValueFactory<>("apptEnd"));
         divisionNameCol.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
         reportCusIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         reportContactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
