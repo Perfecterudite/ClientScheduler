@@ -1,4 +1,4 @@
-package Company;
+package Company.Model;
 
 public class Users {
     private int userID;

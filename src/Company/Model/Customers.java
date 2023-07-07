@@ -19,7 +19,9 @@ public class Customers {
         this.customerAddress = customerAddress;
         this.customerPostalCode = customerPostalCode;
         this.customerPhoneNumber = customerPhoneNumber;
-        this.divisionID = customerID;
+        this.customerCountryID = customerCountryID;
+        this.divisionName = divisionName;
+        this.divisionID = divisionID;
 
     }
 

@@ -8,9 +8,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
+import java.time.ZoneOffset;
+import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import Company.Model.Customers;
 import Company.DAO.DBCustomers;
 import Company.DAO.DBAppt;
+
 
 import java.util.*;
 import javafx.scene.Scene;
@@ -21,14 +27,14 @@ import java.io.IOException;
 public class HomeScreen implements Initializable {
 
     @FXML private TableView<Appointments> appointmentTable;
-    @FXML private TableColumn <?, ?> apptIDCol;
-    @FXML private TableColumn <?, ?> titleCol;
-    @FXML private TableColumn <?, ?> typeCol;
-    @FXML private TableColumn <?, ?> desCol;
-    @FXML private TableColumn <?, ?> locCol;
-    @FXML private TableColumn <?, ?> startCol;
-    @FXML private TableColumn <?, ?> endCol;
-    @FXML private TableColumn <?, ?> contactCol;
+    @FXML private TableColumn <Appointments, Integer> apptIDCol;
+    @FXML private TableColumn <Appointments, String> titleCol;
+    @FXML private TableColumn <Appointments, String> typeCol;
+    @FXML private TableColumn <Appointments, String> desCol;
+    @FXML private TableColumn <Appointments, String> locCol;
+    @FXML private TableColumn <Appointments, Timestamp> startCol;
+    @FXML private TableColumn <Appointments, Timestamp> endCol;
+    @FXML private TableColumn <Appointments, Integer> contactCol;
 
     @FXML private TableView<Customers> customerTable;
     @FXML private TableColumn <?, ?> customer_IDCol;
@@ -72,7 +78,7 @@ public class HomeScreen implements Initializable {
         if (result.isPresent() && result.get() == ButtonType.OK)
         {
             Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-            Parent scene = FXMLLoader.load(getClass().getResource(".../View/mainLogin.fxml"));
+            Parent scene = FXMLLoader.load(getClass().getResource("View/mainLogin.fxml"));
             stage.setScene(new Scene(scene));
             stage.show();
         }

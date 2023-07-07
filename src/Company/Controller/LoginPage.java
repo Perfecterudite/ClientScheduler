@@ -131,7 +131,7 @@ public class LoginPage{
                 boolean name = false;
 
                 for (Appointments a : uList) {
-                    if (a.getStart().isAfter(now) && a.getStart().isBefore(now.plusMinutes(15))) {
+                    if (a.getStart().toLocalDateTime().isAfter(now) && a.getStart().toLocalDateTime().isBefore(now.plusMinutes(15))) {
                         Alert alert3 = new Alert(Alert.AlertType.ERROR);
                         alert3.setHeaderText("UPCOMING APPOINTMENT");
                         alert3.setContentText("You have an appointment scheduled within the next 15 minutes: appointment " + a.getApptID() + " at " + a.getStart());

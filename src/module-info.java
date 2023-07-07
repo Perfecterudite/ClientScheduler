@@ -8,4 +8,5 @@ module ClientScheduler {
     opens Company;
     opens Company.Controller;
     opens Company.View;
+    opens Company.Model;
 }

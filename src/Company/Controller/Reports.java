@@ -7,6 +7,30 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+
+import Company.DAO.DBAppt;
+import Company.DAO.DBContacts;
+//import Company.DAO.DBReport;
+import Company.Model.Contacts;
+import Company.Model.Appointments;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+//import model.*;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.time.Month;
+import java.util.Collections;
+
 public class Reports{
     @FXML private ComboBox <String> selectContact;
     @FXML private TableColumn <?, ?> reportIDCol;
@@ -29,9 +53,165 @@ public class Reports{
     @FXML private Button backBtn;
     @FXML private Button logoutBtn;
 
-    public void backOnClick(ActionEvent actionEvent){
+
+
+    public void initialize() throws SQLException {
+
+        reportIDCol.setCellValueFactory(new PropertyValueFactory<>("appointmentID"));
+        reportTitleCol.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
+        reportDesCol.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
+        reportLocCol.setCellValueFactory(new PropertyValueFactory<>("appointmentLocation"));
+        reportTypeCol.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
+        reportStartCol.setCellValueFactory(new PropertyValueFactory<>("start"));
+        reportEndCol.setCellValueFactory(new PropertyValueFactory<>("end"));
+        reportCusIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
+        reportContactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
+        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
+        totalApptCol.setCellValueFactory(new PropertyValueFactory<>("appointmentTotal"));
+        apptMonthCol.setCellValueFactory(new PropertyValueFactory<>("appointmentMonth"));
+        totalCusCol.setCellValueFactory(new PropertyValueFactory<>("customerTotal"));
+
+        ObservableList<Contacts> contactsObservableList = DBContacts.getAllContacts();
+        ObservableList<String> allContactsNames = FXCollections.observableArrayList();
+        contactsObservableList.forEach(contacts -> allContactsNames.add(contacts.getContactName()));
+        contactScheduleContactBox.setItems(allContactsNames);
 
     }
+
+
+    /**
+     * Fill fxml form with appointment data by contact.
+     */
+    @FXML
+    public void appointmentDataByContact() {
+        try {
+
+            int contactID = 0;
+
+            ObservableList<Appointments> getAllAppointmentData = DBAppt.getAllAppointments();
+            ObservableList<Appointments> appointmentInfo = FXCollections.observableArrayList();
+            ObservableList<Contacts> getAllContacts = DBContacts.getAllContacts();
+
+            Appointments contactAppointmentInfo;
+
+            String contactName = contactScheduleContactBox.getSelectionModel().getSelectedItem();
+
+            for (Contacts contact: getAllContacts) {
+                if (contactName.equals(contact.getContactName())) {
+                    contactID = contact.getId();
+                }
+            }
+
+            for (Appointments appointment: getAllAppointmentData) {
+                if (appointment.getContactID() == contactID) {
+                    contactAppointmentInfo = appointment;
+                    appointmentInfo.add(contactAppointmentInfo);
+                }
+            }
+            allAppointmentsTable.setItems(appointmentInfo);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    /**
+     * Total number of customer appointments by type and month report.
+     * @throws SQLException
+     */
+    public void appointmentTotalsTab() throws SQLException {
+        try {
+            ObservableList<Appointments> getAllAppointments = DBAppt.getAllAppointments();
+            ObservableList<Month> appointmentMonths = FXCollections.observableArrayList();
+            ObservableList<Month> monthOfAppointments = FXCollections.observableArrayList();
+
+            ObservableList<String> appointmentType = FXCollections.observableArrayList();
+            ObservableList<String> uniqueAppointment = FXCollections.observableArrayList();
+
+            ObservableList<ReportType> reportType = FXCollections.observableArrayList();
+            ObservableList<ReportMonth> reportMonths = FXCollections.observableArrayList();
+
+
+            //IDE converted to Lambda
+            getAllAppointments.forEach(appointments -> {
+                appointmentType.add(appointments.getAppointmentType());
+            });
+
+            //IDE converted to Lambda
+            getAllAppointments.stream().map(appointment -> {
+                return appointment.getStart().getMonth();
+            }).forEach(appointmentMonths::add);
+
+            //IDE converted to Lambda
+            appointmentMonths.stream().filter(month -> {
+                return !monthOfAppointments.contains(month);
+            }).forEach(monthOfAppointments::add);
+
+            for (Appointments appointments: getAllAppointments) {
+                String appointmentsAppointmentType = appointments.getAppointmentType();
+                if (!uniqueAppointment.contains(appointmentsAppointmentType)) {
+                    uniqueAppointment.add(appointmentsAppointmentType);
+                }
+            }
+
+            for (Month month: monthOfAppointments) {
+                int totalMonth = Collections.frequency(appointmentMonths, month);
+                String monthName = month.name();
+                ReportMonth appointmentMonth = new ReportMonth(monthName, totalMonth);
+                reportMonths.add(appointmentMonth);
+            }
+            appointmentTotalAppointmentByMonth.setItems(reportMonths);
+
+            for (String type: uniqueAppointment) {
+                String typeToSet = type;
+                int typeTotal = Collections.frequency(appointmentType, type);
+                ReportType appointmentTypes = new ReportType(typeToSet, typeTotal);
+                reportType.add(appointmentTypes);
+            }
+            appointmentTotalsAppointmentType.setItems(reportType);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Custom report to display number of appointments in each Country.
+     * @throws SQLException
+     */
+    public void customerByCountry() throws SQLException {
+        try {
+
+            ObservableList<Reports> aggregatedCountries = reportAccess.getCountries();
+            ObservableList<Reports> countriesToAdd = FXCollections.observableArrayList();
+
+            //IDE converted
+            aggregatedCountries.forEach(countriesToAdd::add);
+
+            customerByCountry.setItems(countriesToAdd);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+
+    /**
+     * Button to go back to main menu.
+     * @throws IOException
+     */
+    @FXML
+    public void backOnClick (ActionEvent event) throws IOException {
+
+        Parent root = FXMLLoader.load(getClass().getResource("../views/MainScreen.fxml"));
+        Scene scene = new Scene(root);
+        Stage MainScreenReturn = (Stage)((Node)event.getSource()).getScene().getWindow();
+        MainScreenReturn.setScene(scene);
+        MainScreenReturn.show();
+    }
+
+
+
 
     public void logoutOnClick(ActionEvent actionEvent){
     }

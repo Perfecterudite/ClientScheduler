@@ -1,5 +1,6 @@
 package Company.Model;
 import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 public class Appointments {
     private int apptID;
@@ -7,14 +8,14 @@ public class Appointments {
     private String apptDescription;
     private String apptLocation;
     private String apptType;
-    private LocalDateTime apptStart;
-    private LocalDateTime apptEnd;
+    public Timestamp apptStart;
+    public Timestamp apptEnd;
     public int customerID;
     public int userID;
     public int contactID;
 
     public Appointments(int apptID, String apptTitle, String apptDescription, String apptLocation, String apptType,
-                        LocalDateTime apptStart, LocalDateTime apptEnd, int customerID, int userID, int contactID){
+                        Timestamp apptStart, Timestamp apptEnd, int customerID, int userID, int contactID){
         this.apptID = apptID;
         this.apptTitle = apptTitle;
         this.apptDescription = apptDescription;
@@ -46,11 +47,11 @@ public class Appointments {
         return apptType;
     }
 
-    public LocalDateTime getStart(){
+    public Timestamp getStart(){
         return apptStart;
     }
 
-    public LocalDateTime getEnd(){
+    public Timestamp getEnd(){
         return apptEnd;
     }
 

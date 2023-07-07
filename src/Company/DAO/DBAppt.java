@@ -25,11 +25,11 @@ public class DBAppt {
 
         try
         {
-            //String sqlgaa = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, customers.Customer_ID, users.User_ID contacts.Contact_ID, " +
-                    //"FROM appointments, contacts, customers, users WHERE appointments.Customer_ID = customers.Customer_ID AND appointments.User_ID = users.User_ID AND appointments.Contact_ID = contacts.Contact_ID  ORDER BY Appointment_ID";
+            String sqlgaa = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, customers.Customer_ID, users.User_ID, contacts.Contact_ID" +
+                    " FROM appointments, contacts, customers, users WHERE appointments.Customer_ID = customers.Customer_ID AND appointments.User_ID = users.User_ID AND appointments.Contact_ID = contacts.Contact_ID  ORDER BY Appointment_ID";
 
-            String sqlaap = "SELECT * FROM appointments";
-            PreparedStatement ps = DatabaseConn.getConnection().prepareStatement(sqlaap);
+            //String sqlaap = "SELECT * FROM appointments";
+            PreparedStatement ps = DatabaseConn.getConnection().prepareStatement(sqlgaa);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next())
@@ -41,8 +41,8 @@ public class DBAppt {
                 String location = rs.getString("Location");
                 //String contactName = rs.getString("Contact_Name");
                 String type = rs.getString("Type");
-                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
-                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                Timestamp start = rs.getTimestamp("Start");
+                Timestamp end = rs.getTimestamp("End");
                 int customerId = rs.getInt("Customer_ID");
                 int contactId = rs.getInt("Contact_ID");
                 int userId = rs.getInt("User_ID");
@@ -83,8 +83,8 @@ public class DBAppt {
                 int contactId = rs.getInt("Contact_ID");
                 //String contactName = rs.getString("Contact_Name");
                 String type = rs.getString("Type");
-                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
-                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                Timestamp start = rs.getTimestamp("Start");
+                Timestamp end = rs.getTimestamp("End");
 
 
                 int customerId = rs.getInt("Customer_ID");
@@ -127,8 +127,8 @@ public class DBAppt {
                 int contactId = rs.getInt("Contact_ID");
                 //String contactName = rs.getString("Contact_Name");
                 String type = rs.getString("Type");
-                LocalDateTime start = rs.getTimestamp("Start").toLocalDateTime();
-                LocalDateTime end = rs.getTimestamp("End").toLocalDateTime();
+                Timestamp start = rs.getTimestamp("Start");
+                Timestamp end = rs.getTimestamp("End");
                 int customerId = rs.getInt("Customer_ID");
                 int userId = rs.getInt("User_ID");
 
@@ -157,10 +157,10 @@ public class DBAppt {
 
             PreparedStatement pscoa = DatabaseConn.getConnection().prepareStatement(sqlcoa);
 
-            pscoa.setTimestamp(1, Timestamp.valueOf(appointments.getStart()));
-            pscoa.setTimestamp(2, Timestamp.valueOf(appointments.getEnd()));
-            pscoa.setTimestamp(3, Timestamp.valueOf(appointments.getStart()));
-            pscoa.setTimestamp(4, Timestamp.valueOf(appointments.getStart()));
+            pscoa.setTimestamp(1, (appointments.getStart()));
+            pscoa.setTimestamp(2, (appointments.getEnd()));
+            pscoa.setTimestamp(3, (appointments.getStart()));
+            pscoa.setTimestamp(4, (appointments.getStart()));
             pscoa.setInt(5, appointments.getCustomerID());
             pscoa.setInt(6, appointments.getApptID());
 
