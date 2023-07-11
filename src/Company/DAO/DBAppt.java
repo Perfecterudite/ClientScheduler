@@ -198,7 +198,7 @@ public class DBAppt {
      * @param userId The userID for with the appointment.
      * @param contactId The contact id for the appointment.
      */
-    public static void addAppointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, int customerId, int userId, int contactId)
+    public static void addAppointment(String title, String description, String location, String type, Timestamp start, Timestamp end, int customerId, int userId, int contactId)
     {
 
         try
@@ -212,8 +212,8 @@ public class DBAppt {
             psaa.setString(2, description);
             psaa.setString(3, location);
             psaa.setString(4, type);
-            psaa.setTimestamp(5, Timestamp.valueOf(start));
-            psaa.setTimestamp(6, Timestamp.valueOf(end));
+            psaa.setTimestamp(5, (start));
+            psaa.setTimestamp(6, (end));
             psaa.setInt(7, customerId);
             psaa.setInt(8, userId);
             psaa.setInt(9, contactId);

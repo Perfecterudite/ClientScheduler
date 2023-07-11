@@ -189,7 +189,7 @@ public class Reports{
     @FXML
     public void backOnClick (ActionEvent event) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("../views/MainScreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
         Scene scene = new Scene(root);
         Stage MainScreenReturn = (Stage)((Node)event.getSource()).getScene().getWindow();
         MainScreenReturn.setScene(scene);

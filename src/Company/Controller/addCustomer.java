@@ -65,7 +65,7 @@ public class addCustomer implements Initializable{
 
 
                 Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                Object nscene= FXMLLoader.load(getClass().getResource("../DAO/homeScreen.fxml"));
+                Object nscene= FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
                 stage.setScene(new Scene((Parent) nscene));
                 stage.show();
             }
@@ -90,7 +90,7 @@ public class addCustomer implements Initializable{
         if (result.isPresent() && result.get() == ButtonType.OK)
         {
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            Parent scene = FXMLLoader.load(getClass().getResource("../DAO/homeScreen.fxml"));
+            Parent scene = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
             stage.setScene(new Scene(scene));
             stage.show();
         }

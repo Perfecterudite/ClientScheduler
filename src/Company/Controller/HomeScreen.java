@@ -87,7 +87,7 @@ public class HomeScreen implements Initializable {
 
     public void addApptOnClick(ActionEvent event) throws IOException{
         Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(getClass().getResource("AddAppmt.fxml"));
+        Parent scene = FXMLLoader.load(getClass().getResource("addAppts.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
 
