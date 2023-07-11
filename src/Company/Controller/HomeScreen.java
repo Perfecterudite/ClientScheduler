@@ -101,6 +101,50 @@ public class HomeScreen implements Initializable {
     }
     public void deleteApptOnClick(ActionEvent event) throws IOException{
 
+        if (appointmentTable.getSelectionModel().isEmpty())
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("PLEASE SELECT AN APPOINTMENT");
+            alert.setContentText("No appointment was selected to delete.");
+
+            Optional<ButtonType> result = alert.showAndWait();
+        }
+        else
+        {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("ARE YOU SURE?");
+            alert.setContentText("The appointment will be deleted from the database, are you sure you want to continue? This action cannot be undone.");
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK)
+            {
+                int appointmentId = appointmentTable.getSelectionModel().getSelectedItem().getApptID();
+
+                String typeMessage = appointmentTable.getSelectionModel().getSelectedItem().getApptType();
+
+                String idMessage = String.valueOf(appointmentTable.getSelectionModel().getSelectedItem().getApptID());
+
+                DBAppt.deleteAppointment(appointmentId);
+
+                appointmentTable.setItems(DBAppt.getAllAppointments());
+
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setHeaderText("DELETED");
+                alert2.setContentText("You have successfully deleted appointment " + idMessage + ", a " + typeMessage + " appointment.");
+
+                alert2.showAndWait();
+            }
+            else
+            {
+                Alert alert3 = new Alert(Alert.AlertType.INFORMATION);
+                alert3.setHeaderText("NOT DELETED");
+                alert3.setContentText("The selected appointment was not deleted.");
+
+                alert3.showAndWait();
+            }
+        }
     }
 
     public void addCustomerOnClick(ActionEvent event) throws IOException{
@@ -119,6 +163,48 @@ public class HomeScreen implements Initializable {
     }
     public void deleteCustomerOnClick(ActionEvent event) throws IOException{
 
+        if (customerTable.getSelectionModel().isEmpty())
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("PLEASE SELECT A CUSTOMER.");
+            alert.setContentText("No customer was selected to delete.");
+
+            Optional<ButtonType> result = alert.showAndWait();
+        }
+
+        else
+        {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("ARE YOU SURE?");
+            alert.setContentText("The customer will be deleted from the database, are you sure you want to continue? This action cannot be undone.");
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK)
+            {
+                int customerId = customerTable.getSelectionModel().getSelectedItem().getCustomerID();
+
+                DBCustomers.deleteCustomer(customerId);
+
+                customerTable.setItems(DBCustomers.getAllCustomers());
+
+
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setHeaderText("DELETED");
+                alert2.setContentText("The selected customer was successfully deleted.");
+
+                alert2.showAndWait();
+            }
+            else
+            {
+                Alert alert3 = new Alert(Alert.AlertType.INFORMATION);
+                alert3.setHeaderText("NOT DELETED");
+                alert3.setContentText("The selected customer was not deleted.");
+
+                alert3.showAndWait();
+            }
+        }
     }
 
 

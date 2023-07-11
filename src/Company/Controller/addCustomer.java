@@ -57,6 +57,7 @@ public class addCustomer implements Initializable{
             String addressTxt = address.getText();
             String postalCodeTxt = postalCode.getText();
             String phone = phoneNumber.getText();
+            Country country = countryBox.getValue();
             firstLevelDivision division = stateProvince.getValue();
 
             if (!custName.isEmpty() && !addressTxt.isEmpty() && !postalCodeTxt.isEmpty() && !phone.isEmpty() && !(division == null))
