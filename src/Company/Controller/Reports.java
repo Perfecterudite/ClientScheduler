@@ -79,7 +79,7 @@ public class Reports{
 
         ObservableList<Contacts> contactsObservableList = DBContacts.getAllContacts();
         ObservableList<String> allContactsNames = FXCollections.observableArrayList();
-        contactsObservableList.forEach(contacts -> allContactsNames.add(contacts.getContactName()));
+        //contactsObservableList.forEach(contacts -> allContactsNames.add(contacts.getContactID()));
         selectContact.setItems(allContactsNames);
 
     }
@@ -103,9 +103,9 @@ public class Reports{
             String contactName = selectContact.getSelectionModel().getSelectedItem();
 
             for (Contacts contact: getAllContacts) {
-                if (contactName.equals(contact.getContactName())) {
+                //if (contactName.equals(contact.getContactName())) {
                     contactID = contact.getContactID();
-                }
+                //}
             }
 
             for (Appointments appointment: getAllAppointmentData) {

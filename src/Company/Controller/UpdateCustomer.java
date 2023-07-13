@@ -20,13 +20,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import Company.Model.Country;
+import Company.Model.Customers;
 import Company.Model.firstLevelDivision;
 
 import java.io.IOException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class UpdateCustomer {
+public class UpdateCustomer implements Initializable {
 
     @FXML private TextField updateCustomerID;
     @FXML private TextField updateName;
@@ -37,6 +38,7 @@ public class UpdateCustomer {
     @FXML private ComboBox<firstLevelDivision> updateState;
     @FXML private Button updateSave;
     @FXML private Button updateCancel;
+    @FXML private Label updateLabel;
 
 
     /** This method saves the customer to the database, and directs back to the 'CUSTOMERS' screen. It gives errors if invalid data is entered.
@@ -62,14 +64,14 @@ public class UpdateCustomer {
             String phone = updateNumber.getText();
             Country country = updateCountry.getValue();
             firstLevelDivision division = updateState.getValue();
-            int updateCustID = Integer.parseInt(updateCustomerID);
+            //int updateCustID = Integer.parseInt(updateCustomerID.getText());
 
             if (!customerName.isEmpty() && !address.isEmpty() && !postalCode.isEmpty() && !phone.isEmpty() && !(division == null))
             {
                 DBCustomers.updateCustomer(customerName, address, postalCode, phone, division.getDivisionID(), customer.getCustomerID());
 
                 Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                Parent scene = FXMLLoader.load(getClass().getResource("../view/ViewCustomers.fxml"));
+                Parent scene = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
                 stage.setScene(new Scene(scene));
                 stage.show();
             }
@@ -99,8 +101,8 @@ public class UpdateCustomer {
         Optional<ButtonType> result = alert.showAndWait();
 
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            scene = FXMLLoader.load(getClass().getResource("../view/ViewCustomers.fxml"));
+           Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            Parent scene = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
             stage.setScene(new Scene(scene));
             stage.show();
         }
@@ -114,109 +116,109 @@ public class UpdateCustomer {
      * @param event making a selection in the country combobox.
      */
     @FXML
-    void onActionDivision(ActionEvent event)
+    void onUpdateDivision(ActionEvent event)
     {
 
-        Country country = countryComboBox.getSelectionModel().getSelectedItem();
+        Country country = updateCountry.getSelectionModel().getSelectedItem();
 
-        if (country.getCountryId() == 1)
+        if (country.getCountryID() == 1)
         {
-            divisionSwitchLabel.setText("State:");
+            updateLabel.setText("State:");
         }
-        else if (country.getCountryId() == 2)
+        else if (country.getCountryID() == 2)
         {
-            divisionSwitchLabel.setText("Sub-division:");
+            updateLabel.setText("Sub-division:");
         }
-        else if (country.getCountryId() == 3)
+        else if (country.getCountryID() == 3)
         {
-            divisionSwitchLabel.setText("Province:");
+            updateLabel.setText("Province:");
         }
 
-        if (country.getCountryId() == 1)
+        if (country.getCountryID() == 1)
         {
-            divisionComboBox.setItems(DBDivisions.getUSDivisions());
+            updateState.setItems(DBDivisions.getUSDivisions());
         }
-        else if (country.getCountryId() == 2)
+        else if (country.getCountryID() == 2)
         {
-            divisionComboBox.setItems(DBDivisions.getUKDivisions());
+            updateState.setItems(DBDivisions.getUKDivisions());
         }
-        else if (country.getCountryId() == 3)
+        else if (country.getCountryID() == 3)
         {
-            divisionComboBox.setItems(DBDivisions.getCADivisions());
+            updateState.setItems(DBDivisions.getCADivisions());
         }
         else
         {
-            divisionComboBox.isDisabled();
+            updateState.isDisabled();
         }
     }
 
 
-    Customer customer;
+    Customers customer;
 
     /**
      * This method sends the customer that is selected in the customer table in the 'VIEW CUSTOMERS' screen to the 'UPDATE CUSTOMERS' screen.
      *
      * @param customer the customer to send
      */
-    public void sendCustomer(Customer customer) {
+    public void sendCustomer(Customers customer) {
 
         this.customer = customer;
 
-        idText.setText(Integer.toString(customer.getCustomerId()));
-        nameText.setText(customer.getCustomerName());
-        addressText.setText(customer.getAddress());
+        //updateCustomerID.setText(Integer.toString(customer.getCustomerID()));
+        updateName.setText(customer.getCustomerName());
+        updateAddress.setText(customer.getCustomerAddress());
 
-        for (Country c : countryComboBox.getItems())
+        for (Country c : updateCountry.getItems())
         {
-            if(customer.countryId == c.getCountryId())
+            if(customer.getCustomerCountryID() == c.getCountryID())
             {
-                countryComboBox.setValue(c);
+                updateCountry.setValue(c);
                 break;
             }
         }
 
-        Country country = countryComboBox.getSelectionModel().getSelectedItem();
+        Country country = updateCountry.getSelectionModel().getSelectedItem();
 
-        if (country.getCountryId() == 1)
+        if (country.getCountryID() == 1)
         {
-            divisionSwitchLabel.setText("State:");
+            updateLabel.setText("State:");
         }
-        else if (country.getCountryId() == 2)
+        else if (country.getCountryID() == 2)
         {
-            divisionSwitchLabel.setText("Sub-division:");
+            updateLabel.setText("Sub-division:");
         }
-        else if (country.getCountryId() == 3)
+        else if (country.getCountryID() == 3)
         {
-            divisionSwitchLabel.setText("Province:");
+            updateLabel.setText("Province:");
         }
 
-        if (country.getCountryId() == 1)
+        if (country.getCountryID() == 1)
         {
-            divisionComboBox.setItems(DBDivisions.getUSDivisions());
+            updateState.setItems(DBDivisions.getUSDivisions());
         }
-        else if (country.getCountryId() == 2)
+        else if (country.getCountryID() == 2)
         {
-            divisionComboBox.setItems(DBDivisions.getUKDivisions());
+            updateState.setItems(DBDivisions.getUKDivisions());
         }
-        else if (country.getCountryId() == 3)
+        else if (country.getCountryID() == 3)
         {
-            divisionComboBox.setItems(DBDivisions.getCADivisions());
+            updateState.setItems(DBDivisions.getCADivisions());
         }
         else
         {
-            divisionComboBox.isDisabled();
+            updateState.isDisabled();
         }
 
-        for(Division d : divisionComboBox.getItems())
+        for(firstLevelDivision d : updateState.getItems())
         {
-            if(customer.divisionId == d.getDivisionId())
+            if(customer.getDivisionID() == d.getDivisionID())
             {
-                divisionComboBox.setValue(d);
+                updateState.setValue(d);
                 break;
             }
         }
-        postalCodeText.setText(customer.getPostalCode());
-        phoneText.setText(customer.getPhone());
+        updatePostal.setText(customer.getCustomerPostalCode());
+        updateNumber.setText(customer.getCustomerPhoneNumber());
     }
 
 
@@ -229,6 +231,6 @@ public class UpdateCustomer {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        countryComboBox.setItems(DBCountries.getAllCountries());
+        updateCountry.setItems(DBCountries.getAllCountries());
     }
 }

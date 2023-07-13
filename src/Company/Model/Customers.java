@@ -31,6 +31,9 @@ public class Customers {
     public String getCustomerName(){
         return customerName;
     }
+    public String toString(){
+        return customerName;
+    }
 
     public String getCustomerAddress(){
         return customerAddress;

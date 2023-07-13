@@ -1,6 +1,7 @@
 package Company.Controller;
 
 
+import Company.Model.Customers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -51,9 +52,16 @@ public class addCustomer implements Initializable{
 
         if (result.isPresent() && result.get() == ButtonType.OK)
         {
+            int ID = 0;
+            for (Customers cust : DBCustomers.getAllCustomers()) {
+
+                if (cust.getCustomerID() > ID)
+
+                    ID = cust.getCustomerID();
+
+            }
 
             String custName = customerName.getText();
-            //String countryBx = countryBox.getValue();
             String addressTxt = address.getText();
             String postalCodeTxt = postalCode.getText();
             String phone = phoneNumber.getText();

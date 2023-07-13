@@ -14,7 +14,7 @@ public class Users {
     public int getUserID(){
         return userID;
     }
-    public String getUserName(){
+    public String toString(){
         return userName;
     }
     public String getUserPassword(){

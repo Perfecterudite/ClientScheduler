@@ -156,10 +156,34 @@ public class HomeScreen implements Initializable {
     }
 
     public void updateCustomerOnClick(ActionEvent event) throws IOException{
-        Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(getClass().getResource("updateCustomer.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+        ;
+
+        if (customerTable.getSelectionModel().isEmpty())
+        {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("PLEASE SELECT A CUSTOMER.");
+            alert.setContentText("No customer was selected to update.");
+
+            Optional<ButtonType> result = alert.showAndWait();
+        }
+
+        else
+        {
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("updateCustomer.fxml"));
+            loader.load();
+
+            UpdateCustomer ADMController = loader.getController();
+            ADMController.sendCustomer(customerTable.getSelectionModel().getSelectedItem());
+
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+
+        }
     }
     public void deleteCustomerOnClick(ActionEvent event) throws IOException{
 

@@ -14,7 +14,7 @@ public class firstLevelDivision {
     public int getDivisionID(){
         return divisionID;
     }
-    public String getDivisionName(){
+    public String toString() {
         return divisionName;
     }
     public int getCountry_ID(){

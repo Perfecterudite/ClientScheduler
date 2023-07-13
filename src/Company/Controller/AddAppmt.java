@@ -1,5 +1,6 @@
 package Company.Controller;
 
+import Company.DAO.DBCustomers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -176,6 +177,7 @@ public class AddAppmt  implements Initializable{
 
         contact.setItems(DBContacts.getAllContacts());
         user_ID.setItems(DBUsers.getAllUsers());
+        customer_ID.setItems(DBCustomers.getAllCustomers());
 
 
 

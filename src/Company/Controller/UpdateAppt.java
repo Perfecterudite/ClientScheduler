@@ -53,7 +53,7 @@ public class UpdateAppt {
      * @throws IOException The exception that will be thrown in an error.
      */
 
-    @FXML
+   /** @FXML
     void updateSaveApptOnClick(ActionEvent event) throws IOException
     {
 
@@ -125,7 +125,7 @@ public class UpdateAppt {
                 alert3.showAndWait();
             }
         }
-    }
+    }**/
 
     /** This method cancels updating the appointment, and directs back to the 'APPOINTMENTS' screen.
      *
@@ -158,7 +158,7 @@ public class UpdateAppt {
      *
      * @param appointment the appointment to send
      */
-    public void sendAppointment(Appointments appointment)
+    /**public void sendAppointment(Appointments appointment)
     {
 
         this.appointment = appointment;
@@ -195,7 +195,7 @@ public class UpdateAppt {
                 break;
             }
         }
-    }
+    }**/
 
 
     /**
@@ -204,7 +204,7 @@ public class UpdateAppt {
      * @param url the location.
      * @param resourceBundle the resources.
      */
-    @Override
+   /** @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
@@ -250,5 +250,5 @@ public class UpdateAppt {
             endTimeComboBox.getItems().add(appointmentEndTimeMin);
             appointmentEndTimeMin = appointmentEndTimeMin.plusMinutes(15);
         }
-    }
+    }**/
 }
