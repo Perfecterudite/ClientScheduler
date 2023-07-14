@@ -1,5 +1,6 @@
 package Company.Controller;
 
+import Company.DAO.DBCustomers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +29,7 @@ import Company.DAO.DBUsers;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-public class UpdateAppt {
+public class UpdateAppt implements Initializable{
 
     @FXML private TextField updateAppointment_ID;
     @FXML private TextField updateTitle;
@@ -53,8 +54,8 @@ public class UpdateAppt {
      * @throws IOException The exception that will be thrown in an error.
      */
 
-   /** @FXML
-    void updateSaveApptOnClick(ActionEvent event) throws IOException
+    @FXML
+    public void updateSaveApptOnClick(ActionEvent event) throws IOException
     {
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -84,11 +85,11 @@ public class UpdateAppt {
 
                 Timestamp start = Timestamp.valueOf(LocalDateTime.of( Stdate, updateStartTime.getValue()));
                 Timestamp end = Timestamp.valueOf(LocalDateTime.of( Endate, updateEndTime.getValue()));
-                //int cId = Integer.parseInt(customer_Id);
+                //int cId = Integer.parseInt(customer_Id.getText());
 
                 if (LocalDateTime.of(Endate, updateEndTime.getValue()).isAfter(LocalDateTime.of(Stdate, updateStartTime.getValue())))
                 {
-                    Appointments newAppointment = new Appointments(appointment_Id, title, description, location, contact.getContactID(), contact.getContactName(), type, start, end, cId, userId.getUserId());
+                    Appointments newAppointment = new Appointments(appointment_Id, title, description, location, type, start, end, customer_Id.getCustomerID(), userId.getUserID(), contact.getContactID());
 
                     if (DBAppt.checkForOverlappingAppointment(newAppointment))
                     {
@@ -100,7 +101,7 @@ public class UpdateAppt {
                     }
                     else {
 
-                        DBAppt.updateAppointment(title, description, location, type, start, end, cId, userId.getUserId(), contact.getContactId(), appointment_Id);
+                        DBAppt.updateAppointment(title, description, location, type, start, end, userId.getUserID(), contact.getContactID(), appointment_Id, contact.getContactID());
 
                         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                         Parent scene = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
@@ -125,7 +126,7 @@ public class UpdateAppt {
                 alert3.showAndWait();
             }
         }
-    }**/
+    }
 
     /** This method cancels updating the appointment, and directs back to the 'APPOINTMENTS' screen.
      *
@@ -133,7 +134,7 @@ public class UpdateAppt {
      * @throws IOException The exception that will be thrown in an error.
      */
     @FXML
-    void updateCancelApptOnClick(ActionEvent event) throws IOException
+    public void updateCancelApptOnClick(ActionEvent event) throws IOException
     {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("ARE YOU SURE?");
@@ -158,44 +159,56 @@ public class UpdateAppt {
      *
      * @param appointment the appointment to send
      */
-    /**public void sendAppointment(Appointments appointment)
+    public void sendAppointment(Appointments appointment)
     {
 
         this.appointment = appointment;
 
-        appointmentIdText.setText(Integer.toString(appointment.getAppointmentId()));
-        titleText.setText(appointment.getTitle());
-        descriptionText.setText(appointment.getDescription());
-        locationText.setText(appointment.getLocation());
+        updateAppointment_ID.setText(Integer.toString(appointment.getApptID()));
+        updateTitle.setText(appointment.getApptTitle());
+        updateDescription.setText(appointment.getApptDescription());
+        updateLocation.setText(appointment.getApptLocation());
 
-        for (Contact c : contactComboBox.getItems()) {
-            if (appointment.contactId == c.getContactId()) {
-                contactComboBox.setValue(c);
+        for (Contacts c : updateContact.getItems()) {
+            if (appointment.contactID == c.getContactID()) {
+                updateContact.setValue(c);
                 break;
             }
         }
 
-        typeText.setText(appointment.getType());
+        updateType.setText(appointment.getApptType());
 
         LocalTime setStart = appointment.getStart().toLocalDateTime().toLocalTime();
-        startTimeComboBox.setValue(setStart);
+        updateStartTime.setValue(setStart);
         LocalTime setEnd = appointment.getEnd().toLocalDateTime().toLocalTime();
-        endTimeComboBox.setValue(setEnd);
+        updateEndTime.setValue(setEnd);
 
         LocalDate appointmentDate = appointment.getStart().toLocalDateTime().toLocalDate();
-        datePicker.setValue(appointmentDate);
+        updateStartDate.setValue(appointmentDate);
+        updateEndDate.setValue(appointmentDate);
 
-        customerId.setText(String.valueOf(appointment.getCustomerId()));
+        //updateCustomer_ID.setValue(appointment.getCustomerID());
+        //updateCustomer_ID.getItems();
 
-        for (User u : userIdComboBox.getItems())
+        for (Customers c : updateCustomer_ID.getItems())
         {
-            if (appointment.userId == u.getUserId())
+            if (appointment.customerID == c.getCustomerID())
             {
-                userIdComboBox.setValue(u);
+                updateCustomer_ID.setValue(c);
                 break;
             }
         }
-    }**/
+
+
+        for (Users u : updateUser_ID.getItems())
+        {
+            if (appointment.userID == u.getUserID())
+            {
+                updateUser_ID.setValue(u);
+                break;
+            }
+        }
+    }
 
 
     /**
@@ -204,16 +217,17 @@ public class UpdateAppt {
      * @param url the location.
      * @param resourceBundle the resources.
      */
-   /** @Override
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        //customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        //customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
 
-        customerTable.setItems(DBCustomers.getAllCustomers());
+        //customerTable.setItems(DBCustomers.getAllCustomers());
 
-        contactComboBox.setItems(DBContacts.getAllContacts());
-        userIdComboBox.setItems(DBUsers.getAllUsers());
+        updateContact.setItems(DBContacts.getAllContacts());
+        updateUser_ID.setItems(DBUsers.getAllUsers());
+        updateCustomer_ID.setItems(DBCustomers.getAllCustomers());
 
         LocalTime appointmentStartTimeMinEST = LocalTime.of(8, 0);
         LocalDateTime startMinEST = LocalDateTime.of(LocalDate.now(), appointmentStartTimeMinEST);
@@ -229,7 +243,7 @@ public class UpdateAppt {
 
         while (appointmentStartTimeMin.isBefore(appointmentStartTimeMax.plusSeconds(1)))
         {
-            startTimeComboBox.getItems().add(appointmentStartTimeMin);
+            updateStartTime.getItems().add(appointmentStartTimeMin);
             appointmentStartTimeMin = appointmentStartTimeMin.plusMinutes(15);
         }
 
@@ -247,8 +261,8 @@ public class UpdateAppt {
 
         while (appointmentEndTimeMin.isBefore(appointmentEndTimeMax.plusSeconds(1)))
         {
-            endTimeComboBox.getItems().add(appointmentEndTimeMin);
+            updateEndTime.getItems().add(appointmentEndTimeMin);
             appointmentEndTimeMin = appointmentEndTimeMin.plusMinutes(15);
         }
-    }**/
+    }
 }

@@ -1,8 +1,10 @@
 package Company.Controller;
 
 import Company.DAO.DBCountries;
+import Company.DAO.DBDivisions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -16,7 +18,8 @@ import Company.Model.Contacts;
 import Company.Model.Country;
 import Company.Model.Appointments;
 import Company.Model.Report;
-import Company.Model.ReportType;
+import Company.Model.firstLevelDivision;
+//import Company.Model.ReportType;
 import Company.Model.ReportMonth;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,11 +35,13 @@ import javafx.stage.Stage;
 //import model.*;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.time.Month;
 import java.util.Collections;
+import java.util.ResourceBundle;
 
-public class Reports{
+public class Reports implements Initializable {
     @FXML private ComboBox <String> selectContact;
     @FXML private TableColumn <?, ?> reportIDCol;
     @FXML private TableColumn <?, ?> reportTitleCol;
@@ -53,14 +58,16 @@ public class Reports{
     @FXML private TableColumn <?, ?> divisionNameCol;
     @FXML private TableColumn <?, ?> totalCusCol;
     @FXML private TableView<Appointments> reportsTable;
-    @FXML private TableView<ReportType> reportsTypeTable;
-    @FXML private TableView<ReportMonth> reportsDivTable;
+    @FXML private TableView<Report> reportsTypeTable;
+    @FXML private TableView<Country> reportsDivTable;
     @FXML private Button backBtn;
     @FXML private Button logoutBtn;
 
 
 
-    public void initialize() throws SQLException {
+
+
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
         reportIDCol.setCellValueFactory(new PropertyValueFactory<>("apptID"));
         reportTitleCol.setCellValueFactory(new PropertyValueFactory<>("apptTitle"));
@@ -69,7 +76,7 @@ public class Reports{
         reportTypeCol.setCellValueFactory(new PropertyValueFactory<>("apptType"));
         reportStartCol.setCellValueFactory(new PropertyValueFactory<>("apptStart"));
         reportEndCol.setCellValueFactory(new PropertyValueFactory<>("apptEnd"));
-        divisionNameCol.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
+        divisionNameCol.setCellValueFactory(new PropertyValueFactory<>("countryName"));
         reportCusIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         reportContactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
         apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
@@ -77,9 +84,13 @@ public class Reports{
         apptMonthCol.setCellValueFactory(new PropertyValueFactory<>("appointmentMonth"));
         totalCusCol.setCellValueFactory(new PropertyValueFactory<>("customerTotal"));
 
+        reportsTable.setItems(DBAppt.getAllAppointments());
+        reportsDivTable.setItems(DBCountries.getAllCountries());
+        //reportsTypeTable.setItems(DBAppt.getAllAppointments());
+
         ObservableList<Contacts> contactsObservableList = DBContacts.getAllContacts();
         ObservableList<String> allContactsNames = FXCollections.observableArrayList();
-        //contactsObservableList.forEach(contacts -> allContactsNames.add(contacts.getContactID()));
+        contactsObservableList.forEach(contacts -> allContactsNames.add(contacts.getContactName()));
         selectContact.setItems(allContactsNames);
 
     }
@@ -87,9 +98,10 @@ public class Reports{
 
     /**
      * Fill fxml form with appointment data by contact.
+     * appointmentDataByContact()
      */
     @FXML
-    public void appointmentDataByContact() {
+    public void onSelectContact() {
         //try {
 
             int contactID = 0;
@@ -103,9 +115,9 @@ public class Reports{
             String contactName = selectContact.getSelectionModel().getSelectedItem();
 
             for (Contacts contact: getAllContacts) {
-                //if (contactName.equals(contact.getContactName())) {
+                if (contactName.equals(contact.getContactName())) {
                     contactID = contact.getContactID();
-                //}
+                }
             }
 
             for (Appointments appointment: getAllAppointmentData) {
@@ -120,7 +132,6 @@ public class Reports{
             throwables.printStackTrace();
         }**/
     }
-
     /**
      * Total number of customer appointments by type and month report.
      * @throws SQLException
@@ -134,8 +145,8 @@ public class Reports{
             ObservableList<String> appointmentType = FXCollections.observableArrayList();
             ObservableList<String> uniqueAppointment = FXCollections.observableArrayList();
 
-            ObservableList<ReportType> reportType = FXCollections.observableArrayList();
-            ObservableList<ReportMonth> reportMonths = FXCollections.observableArrayList();
+            ObservableList<Report> reportType = FXCollections.observableArrayList();
+            ObservableList<Report> reportMonths = FXCollections.observableArrayList();
 
 
             //IDE converted to Lambda
@@ -163,15 +174,15 @@ public class Reports{
             for (Month month: monthOfAppointments) {
                 int totalMonth = Collections.frequency(appointmentMonths, month);
                 String monthName = month.name();
-                ReportMonth appointmentMonth = new ReportMonth(monthName, totalMonth);
+                Report appointmentMonth = new Report(monthName, totalMonth);
                 reportMonths.add(appointmentMonth);
             }
-            reportsDivTable.setItems(reportMonths);
+            reportsTypeTable.setItems(reportMonths);
 
             for (String type: uniqueAppointment) {
                 String typeToSet = type;
-                int typeTotal = Collections.frequency(appointmentType, type);
-                ReportType appointmentTypes = new ReportType(typeToSet, typeTotal);
+                //int typeTotal = Collections.frequency(appointmentType, type);
+                Report appointmentTypes = new Report(typeToSet);
                 reportType.add(appointmentTypes);
             }
             reportsTypeTable.setItems(reportType);

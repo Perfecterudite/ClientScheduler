@@ -42,7 +42,7 @@
             </TableView>
             <TableView fx:id="reportsDivTable" layoutX="562.0" layoutY="285.0" prefHeight="200.0" prefWidth="225.0">
               <columns>
-                <TableColumn fx:id="divisionNameCol" prefWidth="110.0" text="Division Name" />
+                <TableColumn fx:id="divisionNameCol" prefWidth="110.0" text="Country" />
                 <TableColumn fx:id="totalCusCol" prefWidth="114.0" text="Total Customers" />
               </columns>
             </TableView>
@@ -51,8 +51,7 @@
             <Label layoutX="489.0" layoutY="59.0" text="Select A Contact" />
             <ScrollBar layoutX="37.0" layoutY="478.0" prefHeight="14.0" prefWidth="409.0" />
             <ScrollBar layoutX="562.0" layoutY="478.0" prefHeight="14.0" prefWidth="225.0" />
-            <ScrollBar layoutX="50.0" layoutY="249.0" prefHeight="14.0" prefWidth="721.0" />
-            <ComboBox fx:id="selectContact" layoutX="605.0" layoutY="55.0" prefWidth="150.0" promptText="select Contact" />
+            <ComboBox fx:id="selectContact" layoutX="605.0" layoutY="55.0" onAction="#onSelectContact" prefWidth="150.0" promptText="select Contact" />
          </children>
       </Pane>
    </children>

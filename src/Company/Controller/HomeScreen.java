@@ -84,6 +84,33 @@ public class HomeScreen implements Initializable {
         }
 
     }
+    @FXML
+    public void onViewAll(ActionEvent event)
+    {
+        appointmentTable.setItems(DBAppt.getAllAppointments());
+    }
+
+    /**
+     * This method shows current month appointments in the table.
+     *
+     * @param event clicking on the 'CURRENT MONTH' radio button.
+     */
+    @FXML
+    public void onViewByMonth(ActionEvent event)
+    {
+        appointmentTable.setItems(DBAppt.getMonthAppointments());
+    }
+
+    /**
+     * This method shows current week appointments in the table.
+     *
+     * @param event clicking on the 'CURRENT WEEK' radio button.
+     */
+    @FXML
+    public void onViewByWeek(ActionEvent event)
+    {
+        appointmentTable.setItems(DBAppt.getWeekAppointments());
+    }
 
     public void addApptOnClick(ActionEvent event) throws IOException{
         Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
@@ -91,13 +118,38 @@ public class HomeScreen implements Initializable {
         stage.setScene(new Scene(scene));
         stage.show();
 
+
+
     }
 
     public void updateApptOnClick(ActionEvent event) throws IOException{
-        Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-        Parent scene = FXMLLoader.load(getClass().getResource("updateAppt.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+
+        if (appointmentTable.getSelectionModel().isEmpty())
+        {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("PLEASE SELECT AN APPOINTMENT");
+            alert.setContentText("No appointment was selected to update.");
+
+            Optional<ButtonType> result = alert.showAndWait();
+        }
+
+        else
+        {
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("updateAppt.fxml"));
+            loader.load();
+
+            UpdateAppt ADMController = loader.getController();
+            ADMController.sendAppointment(appointmentTable.getSelectionModel().getSelectedItem());
+
+
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
     }
     public void deleteApptOnClick(ActionEvent event) throws IOException{
 
@@ -156,7 +208,6 @@ public class HomeScreen implements Initializable {
     }
 
     public void updateCustomerOnClick(ActionEvent event) throws IOException{
-        ;
 
         if (customerTable.getSelectionModel().isEmpty())
         {
