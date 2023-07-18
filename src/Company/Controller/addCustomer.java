@@ -61,6 +61,7 @@ public class addCustomer implements Initializable{
 
             }
 
+            customerID.setText(String.valueOf(++ID));
             String custName = customerName.getText();
             String addressTxt = address.getText();
             String postalCodeTxt = postalCode.getText();

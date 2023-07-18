@@ -1,5 +1,6 @@
 package Company.Controller;
 
+import Company.ConnectionDB.DatabaseConn;
 import Company.Model.Appointments;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +18,8 @@ import Company.Model.Customers;
 import Company.DAO.DBCustomers;
 import Company.DAO.DBAppt;
 
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import java.util.*;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -76,7 +78,7 @@ public class HomeScreen implements Initializable {
         if (result.isPresent() && result.get() == ButtonType.OK)
         {
             Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-            Parent scene = FXMLLoader.load(getClass().getResource("View/mainLogin.fxml"));
+            Parent scene = FXMLLoader.load(getClass().getResource("...Company/View/mainLogin.fxml"));
             stage.setScene(new Scene(scene));
             stage.show();
         }
@@ -261,6 +263,7 @@ public class HomeScreen implements Initializable {
                 DBCustomers.deleteCustomer(customerId);
 
                 customerTable.setItems(DBCustomers.getAllCustomers());
+                //ObservableList<Appointments> getAllApptList = DBAppt.getAllAppointments();
 
 
                 Alert alert2 = new Alert(Alert.AlertType.INFORMATION);

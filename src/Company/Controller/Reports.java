@@ -160,9 +160,4 @@ public class Reports implements Initializable {
     }
 
 
-
-
-    public void logoutOnClick(ActionEvent actionEvent){
-    }
-
 }
