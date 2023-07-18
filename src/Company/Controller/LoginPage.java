@@ -45,6 +45,7 @@ public class LoginPage implements Initializable {
     @FXML private PasswordField password;
     @FXML private Label usernameLabel;
     @FXML private Label passwordLabel;
+    @FXML private Label titleLabel;
     @FXML private Label zoneLabel;
     @FXML private Label switchLabel;
     @FXML private Button loginBtn;
@@ -168,15 +169,16 @@ public class LoginPage implements Initializable {
     //@Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+        switchLabel.setText((ZoneId.systemDefault()).getId());
         try
         {
             ResourceBundle rb = ResourceBundle.getBundle("languages/language", Locale.getDefault());
 
             if (Locale.getDefault().getLanguage().equals("en") || Locale.getDefault().getLanguage().equals("fr"))
             {
-                //titleLabel.setText(rb.getString("title"));
-                //usernameLabel.setText(rb.getString("usernameLabel"));
-                //passwordLabel.setText(rb.getString("passwordLabel"));
+                titleLabel.setText(rb.getString("title"));
+                usernameLabel.setText(rb.getString("usernameLabel"));
+                passwordLabel.setText(rb.getString("passwordLabel"));
                 zoneLabel.setText(rb.getString("zoneLabel"));
                 loginBtn.setText(rb.getString("loginBtn"));
                 switchLabel.setText((ZoneId.systemDefault()).getId());

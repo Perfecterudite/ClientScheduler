@@ -57,7 +57,7 @@ public class HomeScreen implements Initializable {
     @FXML private Button updateAppt;
     @FXML private Button deleteAppt;
     @FXML private Button reports;
-    @FXML private Button logout;
+    @FXML private Button exit;
 
 
     public void reportOnClick(ActionEvent event) throws IOException{
@@ -68,19 +68,23 @@ public class HomeScreen implements Initializable {
 
     }
 
-    public void logoutOnClick(ActionEvent event) throws IOException{
+    public void exitOnClick(ActionEvent event) throws IOException{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("ARE YOU SURE?");
-        alert.setContentText("This will log you out, are you sure you want to continue?");
+        alert.setContentText("This will exit the screen, are you sure you want to continue?");
 
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.isPresent() && result.get() == ButtonType.OK)
+        /**if (result.isPresent() && result.get() == ButtonType.OK)
         {
             Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-            Parent scene = FXMLLoader.load(getClass().getResource("...Company/View/mainLogin.fxml"));
+            Parent scene = FXMLLoader.load(getClass().getResource("View/mainLogin.fxml"));
             stage.setScene(new Scene(scene));
             stage.show();
+        }**/
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            ((Button)(event.getSource())).getScene().getWindow().hide();
         }
 
     }
@@ -263,7 +267,7 @@ public class HomeScreen implements Initializable {
                 DBCustomers.deleteCustomer(customerId);
 
                 customerTable.setItems(DBCustomers.getAllCustomers());
-                //ObservableList<Appointments> getAllApptList = DBAppt.getAllAppointments();
+
 
 
                 Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
