@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import Company.DAO.DBAppt;
 import Company.DAO.DBUsers;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import java.io.IOException;
@@ -16,8 +17,6 @@ import javafx.scene.control.Button;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 
-
-//import model.LogonSession;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -29,6 +28,7 @@ import java.time.format.DateTimeFormatter;
 
 
 import java.util.Optional;
+import java.time.ZoneId;
 
 import javafx.scene.Scene;
 import javafx.collections.ObservableList;
@@ -38,14 +38,14 @@ import javafx.stage.Stage;
 
 import javafx.scene.control.Label;
 
-public class LoginPage{
+public class LoginPage implements Initializable {
 
     @FXML private TextField username;
     @FXML private PasswordField password;
     @FXML private Label usernameLabel;
     @FXML private Label passwordLabel;
-    @FXML private Label locationName;
-    @FXML private Label locationLabel;
+    @FXML private Label zoneLabel;
+    @FXML private Label switchLabel;
     @FXML private Button loginBtn;
     private String confirmSure;
     private String confirmExit;
@@ -61,19 +61,12 @@ public class LoginPage{
      * @throws IOException
      */
     public void switchScreen(ActionEvent event, String switchPath) throws IOException {
-        //try {
             Parent scene = FXMLLoader.load(getClass().getResource(switchPath));
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            //Scene = new Scene(scene);
-            stage.setScene(new Scene(scene));
-            //Scene scene = new Scene(parent);
 
-            //window.setScene(scene);
+            stage.setScene(new Scene(scene));
             stage.show();
 
-       /** }catch (Exception e){
-            System.out.println("can't load scene");
-        }**/
 
 
     }
@@ -195,26 +188,6 @@ public class LoginPage{
             error.printStackTrace();
         }
     }
-                   //}catch(){
-
-
-    /** This method exits the application.
-     *
-     * @param event clicking the exit button.
-     */
-    @FXML
-    public void onActionExitApplication(ActionEvent event)
-    {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText(confirmSure);
-        alert.setContentText(confirmExit);
-
-        Optional<ButtonType> result = alert.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            ((Button)(event.getSource())).getScene().getWindow().hide();
-        }
-    }
 
 
     /**
@@ -235,13 +208,13 @@ public class LoginPage{
                 //titleLabel.setText(rb.getString("title"));
                 usernameLabel.setText(rb.getString("usernameLabel"));
                 passwordLabel.setText(rb.getString("passwordLabel"));
-                //zoneIdLabel.setText(rb.getString("zoneIdLabel"));
+                zoneLabel.setText(rb.getString("zoneLabel"));
                 loginBtn.setText(rb.getString("loginBtn"));
-                //switchLabelZoneId.setText((ZoneId.systemDefault()).getId());
+                switchLabel.setText((ZoneId.systemDefault()).getId());
                 confirmSure = rb.getString("confirmSure");
                 confirmExit = rb.getString("confirmExit");
-                //invalidLoginData = rb.getString("invalidLoginData");
-                //pleaseEnterValid = rb.getString("pleaseEnterValid");
+                invalidLoginData = rb.getString("invalidLoginData");
+                pleaseEnterValid = rb.getString("pleaseEnterValid");
             }
         }
         catch (Exception e)

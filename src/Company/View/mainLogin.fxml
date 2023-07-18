@@ -26,5 +26,12 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
+      <Label layoutX="141.0" layoutY="65.0" text="Appointment Schedule">
+         <font>
+            <Font name="System Bold" size="34.0" />
+         </font>
+      </Label>
+      <Label fx:id="zoneLabel" layoutX="49.0" layoutY="336.0" text="Zone" />
+      <Label fx:id="SwitchLabel" layoutX="168.0" layoutY="336.0" text="here" />
    </children>
 </AnchorPane>
