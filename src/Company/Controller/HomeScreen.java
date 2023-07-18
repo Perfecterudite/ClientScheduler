@@ -45,8 +45,6 @@ public class HomeScreen implements Initializable {
     @FXML private TableColumn <?, ?> stateCol;
     @FXML private TableColumn <?, ?> numberCol;
     @FXML private TableColumn <?, ?> customerIDCol;
-    //@FXML private TableView<Company.Model.Report> homeApptTable;
-    //@FXML private TableView<Company.Model.Report> homeCustomerTable;
     @FXML private RadioButton radioCurrentWeek;
     @FXML private RadioButton radioCurrentMonth;
     @FXML private RadioButton radioAll;

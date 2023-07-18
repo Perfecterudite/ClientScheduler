@@ -1,7 +1,6 @@
 package Company.Controller;
 
 import Company.DAO.DBCountries;
-import Company.DAO.DBDivisions;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,18 +12,13 @@ import javafx.scene.control.TableView;
 
 import Company.DAO.DBAppt;
 import Company.DAO.DBContacts;
-//import Company.DAO.DBCountries;
+import Company.DAO.DBCustomers;
 import Company.Model.Contacts;
 import Company.Model.Country;
 import Company.Model.Appointments;
-import Company.Model.Report;
-import Company.Model.firstLevelDivision;
 //import Company.Model.ReportType;
-import Company.Model.ReportMonth;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -36,13 +30,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.time.Month;
-import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class Reports implements Initializable {
-    @FXML private ComboBox <String> selectContact;
+    @FXML private ComboBox <Contacts> selectContact;
     @FXML private TableColumn <?, ?> reportIDCol;
     @FXML private TableColumn <?, ?> reportTitleCol;
     @FXML private TableColumn <?, ?> reportTypeCol;
@@ -52,14 +43,11 @@ public class Reports implements Initializable {
     @FXML private TableColumn <?, ?> reportEndCol;
     @FXML private TableColumn <?, ?> reportContactCol;
     @FXML private TableColumn <?, ?> reportCusIDCol;
-    @FXML private TableColumn <?, ?> apptMonthCol;
-    @FXML private TableColumn <?, ?> apptTypeCol;
-    @FXML private TableColumn <?, ?> totalApptCol;
-    @FXML private TableColumn <?, ?> divisionNameCol;
-    @FXML private TableColumn <?, ?> totalCusCol;
     @FXML private TableView<Appointments> reportsTable;
-    @FXML private TableView<Report> reportsTypeTable;
-    @FXML private TableView<Country> reportsDivTable;
+    @FXML private ComboBox<String> monthCombo;
+    @FXML private ComboBox<String> typeCombo;
+    @FXML private Label reportResult;
+    @FXML private Label custTotal;
     @FXML private Button backBtn;
     @FXML private Button logoutBtn;
 
@@ -76,120 +64,84 @@ public class Reports implements Initializable {
         reportTypeCol.setCellValueFactory(new PropertyValueFactory<>("apptType"));
         reportStartCol.setCellValueFactory(new PropertyValueFactory<>("apptStart"));
         reportEndCol.setCellValueFactory(new PropertyValueFactory<>("apptEnd"));
-        divisionNameCol.setCellValueFactory(new PropertyValueFactory<>("countryName"));
         reportCusIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         reportContactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
-        apptTypeCol.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
-        totalApptCol.setCellValueFactory(new PropertyValueFactory<>("appointmentTotal"));
-        apptMonthCol.setCellValueFactory(new PropertyValueFactory<>("appointmentMonth"));
-        totalCusCol.setCellValueFactory(new PropertyValueFactory<>("customerTotal"));
-
         reportsTable.setItems(DBAppt.getAllAppointments());
-        reportsDivTable.setItems(DBCountries.getAllCountries());
-        //reportsTypeTable.setItems(DBAppt.getAllAppointments());
+        monthCombo.setItems(FXCollections.observableArrayList("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"));
+        typeCombo.setItems(DBAppt.getAllTypes());
+        selectContact.setItems(DBContacts.getAllContacts());
 
-        ObservableList<Contacts> contactsObservableList = DBContacts.getAllContacts();
-        ObservableList<String> allContactsNames = FXCollections.observableArrayList();
-        contactsObservableList.forEach(contacts -> allContactsNames.add(contacts.getContactName()));
-        selectContact.setItems(allContactsNames);
 
     }
 
 
+
     /**
-     * Fill fxml form with appointment data by contact.
-     * appointmentDataByContact()
+     * This method the runs the first report, displaying the number of appointments by month and type.
+     *
+     * @param event clicking on the button for running the report.
      */
     @FXML
-    public void onSelectContact() {
-        //try {
-
-            int contactID = 0;
-
-            ObservableList<Appointments> getAllAppointmentData = DBAppt.getAllAppointments();
-            ObservableList<Appointments> appointmentInfo = FXCollections.observableArrayList();
-            ObservableList<Contacts> getAllContacts = DBContacts.getAllContacts();
-
-            Appointments contactAppointmentInfo;
-
-            String contactName = selectContact.getSelectionModel().getSelectedItem();
-
-            for (Contacts contact: getAllContacts) {
-                if (contactName.equals(contact.getContactName())) {
-                    contactID = contact.getContactID();
-                }
-            }
-
-            for (Appointments appointment: getAllAppointmentData) {
-                if (appointment.getContactID() == contactID) {
-                    contactAppointmentInfo = appointment;
-                    appointmentInfo.add(contactAppointmentInfo);
-                }
-            }
-            reportsTable.setItems(appointmentInfo);
-
-        /**} catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }**/
-    }
-    /**
-     * Total number of customer appointments by type and month report.
-     * @throws SQLException
-     */
-    public void appointmentTotalsTab() throws SQLException {
-        try {
-            ObservableList<Appointments> getAllAppointments = DBAppt.getAllAppointments();
-            ObservableList<Month> appointmentMonths = FXCollections.observableArrayList();
-            ObservableList<Month> monthOfAppointments = FXCollections.observableArrayList();
-
-            ObservableList<String> appointmentType = FXCollections.observableArrayList();
-            ObservableList<String> uniqueAppointment = FXCollections.observableArrayList();
-
-            ObservableList<Report> reportType = FXCollections.observableArrayList();
-            ObservableList<Report> reportMonths = FXCollections.observableArrayList();
-
-
-            //IDE converted to Lambda
-            getAllAppointments.forEach(appointments -> {
-                appointmentType.add(appointments.getApptType());
-            });
-
-            //IDE converted to Lambda
-            /**getAllAppointments.stream().map(appointment -> {
-                return appointment.getStart().getMonth();
-            }).forEach(appointmentMonths::add);**/
-
-            //IDE converted to Lambda
-            appointmentMonths.stream().filter(month -> {
-                return !monthOfAppointments.contains(month);
-            }).forEach(monthOfAppointments::add);
-
-            for (Appointments appointments: getAllAppointments) {
-                String appointmentsAppointmentType = appointments.getApptType();
-                if (!uniqueAppointment.contains(appointmentsAppointmentType)) {
-                    uniqueAppointment.add(appointmentsAppointmentType);
-                }
-            }
-
-            for (Month month: monthOfAppointments) {
-                int totalMonth = Collections.frequency(appointmentMonths, month);
-                String monthName = month.name();
-                Report appointmentMonth = new Report(monthName, totalMonth);
-                reportMonths.add(appointmentMonth);
-            }
-            reportsTypeTable.setItems(reportMonths);
-
-            for (String type: uniqueAppointment) {
-                String typeToSet = type;
-                //int typeTotal = Collections.frequency(appointmentType, type);
-                Report appointmentTypes = new Report(typeToSet);
-                reportType.add(appointmentTypes);
-            }
-            reportsTypeTable.setItems(reportType);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+    void onActionRun(ActionEvent event)
+    {
+        String month = monthCombo.getValue();
+        if (month == null)
+        {
+            return;
         }
+
+        String type = typeCombo.getValue();
+        if (type == null)
+        {
+            return;
+        }
+
+        int total = DBAppt.getMonthAndTypeCount(month, type);
+
+        reportResult.setText(String.valueOf(total));
+    }
+
+
+
+    /**
+     * This method the runs the second report, displaying the appointment information for a specific contact.
+     *
+     * Discussion of lambda - I implemented a lambda expression to facilitate the filtering of the appointments list by contact id to find all appointments that have the specific contact listed.
+     *
+     * @param event clicking on the button for running the report.
+     */
+    @FXML
+    void onSelectContact(ActionEvent event)
+    {
+        Contacts contact = selectContact.getValue();
+
+        if (contact == null)
+        {
+            return;
+        }
+        ObservableList<Appointments> aList = DBAppt.getAllAppointments();
+        ObservableList<Appointments> cList = aList.filtered(ap ->
+        {
+
+            if (ap.getContactID() == contact.getContactID()) {
+                return true;
+            }
+            return false;
+
+        });
+
+        reportsTable.setItems(cList);
+    }
+
+    /**
+     * This method the runs the third report, displaying the total number of appointments.
+     *
+     * @param event clicking on the button for running the report.
+     */
+    @FXML
+    void onTotalCustomerRun(ActionEvent event)
+    {
+        custTotal.setText(String.valueOf(DBCustomers.getAllCustomers().size()));
     }
 
 
