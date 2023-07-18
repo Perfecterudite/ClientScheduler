@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.io.IOException;
 
 
 import java.time.LocalDateTime;
@@ -79,7 +80,7 @@ public class LoginPage implements Initializable {
      * @throws IOException
      * @throws SQLException
      */
-    public void loginClick(ActionEvent event) throws SQLException, IOException {
+    public void loginClick(ActionEvent event) {
         try {
             String userName = username.getText();
             String passWord = password.getText();
@@ -95,16 +96,6 @@ public class LoginPage implements Initializable {
 
 
             if (userId > 0) {
-
-                /**FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("View/homeScreen.fxml"));
-                Parent scene = loader.load();
-                Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-                stage.setScene(new Scene(scene));
-                stage.show();**/
-
-                //switchScreen(event, ".../View/homeScreen.fxml ");
-
 
                 outputFile.println(s + " " + username.getText() + " successfully logged in");
                 outputFile.close();
@@ -134,7 +125,6 @@ public class LoginPage implements Initializable {
                     }
                 }
 
-                //}
 
                 if (!name) {
                     Alert alert3 = new Alert(Alert.AlertType.ERROR);
@@ -143,27 +133,6 @@ public class LoginPage implements Initializable {
                     alert3.showAndWait();
                 }
 
-
-                /**FXMLLoader loader = new FXMLLoader();
-                 loader.setLocation(getClass().getResource("homeScreen.fxml"));
-                 Parent scene = loader.load();
-                 Stage stage = (Stage) ((Button)event.getSource()).getScene().getWindow();
-                 stage.setScene(new Scene(scene));
-                 stage.show();
-
-
-                 /**
-                 Parent root = FXMLLoader.load(getClass().getResource("View/mainLogin.fxml"));
-                 primaryStage.setTitle("Scheduler");
-                 primaryStage.setScene(new Scene(root, 800, 575));
-                 primaryStage.show();
-
-
-
-                Stage window = (Stage) ((Button) event.getSource()).getScene().getWindow();
-                 Scene scene = FXMLLoader.load(getClass().getResource("View/homeScreen.fxml"));
-                 window.setScene((scene));
-                 window.show();**/
                 switchScreen(event, "homeScreen.fxml");
 
 
@@ -206,8 +175,8 @@ public class LoginPage implements Initializable {
             if (Locale.getDefault().getLanguage().equals("en") || Locale.getDefault().getLanguage().equals("fr"))
             {
                 //titleLabel.setText(rb.getString("title"));
-                usernameLabel.setText(rb.getString("usernameLabel"));
-                passwordLabel.setText(rb.getString("passwordLabel"));
+                //usernameLabel.setText(rb.getString("usernameLabel"));
+                //passwordLabel.setText(rb.getString("passwordLabel"));
                 zoneLabel.setText(rb.getString("zoneLabel"));
                 loginBtn.setText(rb.getString("loginBtn"));
                 switchLabel.setText((ZoneId.systemDefault()).getId());
