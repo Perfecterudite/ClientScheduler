@@ -8,21 +8,21 @@ public class Appointments {
     private String apptDescription;
     private String apptLocation;
     private String apptType;
-    public Timestamp apptStart;
-    public Timestamp apptEnd;
+    public Timestamp Start;
+    public Timestamp End;
     public int customerID;
     public int userID;
     public int contactID;
 
     public Appointments(int apptID, String apptTitle, String apptDescription, String apptLocation, String apptType,
-                        Timestamp apptStart, Timestamp apptEnd, int customerID, int userID, int contactID){
+                        Timestamp Start, Timestamp End, int customerID, int userID, int contactID){
         this.apptID = apptID;
         this.apptTitle = apptTitle;
         this.apptDescription = apptDescription;
         this.apptLocation = apptLocation;
         this.apptType = apptType;
-        this.apptStart = apptStart;
-        this.apptEnd = apptEnd;
+        this.Start = Start;
+        this.End = End;
         this.customerID = customerID;
         this.userID = userID;
         this.contactID = contactID;
@@ -48,11 +48,11 @@ public class Appointments {
     }
 
     public Timestamp getStart(){
-        return apptStart;
+        return Start;
     }
 
     public Timestamp getEnd(){
-        return apptEnd;
+        return End;
     }
 
     public int getCustomerID(){
@@ -88,11 +88,11 @@ public class Appointments {
     }
 
     public void setStart(){
-        this.apptStart = apptStart;
+        this.Start = Start;
     }
 
     public void setEnd(){
-        this.apptEnd = apptEnd;
+        this.End = End;
     }
 
     public void setCustomerID(){

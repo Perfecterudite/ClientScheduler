@@ -62,8 +62,8 @@ public class Reports implements Initializable {
         reportDesCol.setCellValueFactory(new PropertyValueFactory<>("apptDescription"));
         reportLocCol.setCellValueFactory(new PropertyValueFactory<>("apptLocation"));
         reportTypeCol.setCellValueFactory(new PropertyValueFactory<>("apptType"));
-        reportStartCol.setCellValueFactory(new PropertyValueFactory<>("apptStart"));
-        reportEndCol.setCellValueFactory(new PropertyValueFactory<>("apptEnd"));
+        reportStartCol.setCellValueFactory(new PropertyValueFactory<>("Start"));
+        reportEndCol.setCellValueFactory(new PropertyValueFactory<>("End"));
         reportCusIDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         reportContactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
         reportsTable.setItems(DBAppt.getAllAppointments());

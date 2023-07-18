@@ -34,8 +34,8 @@ public class HomeScreen implements Initializable {
     @FXML private TableColumn <Appointments, String> typeCol;
     @FXML private TableColumn <Appointments, String> desCol;
     @FXML private TableColumn <Appointments, String> locCol;
-    @FXML private TableColumn <Appointments, Timestamp> startCol;
-    @FXML private TableColumn <Appointments, Timestamp> endCol;
+    @FXML private TableColumn <Appointments, LocalDateTime> startCol;
+    @FXML private TableColumn <Appointments, LocalDateTime> endCol;
     @FXML private TableColumn <Appointments, Integer> contactCol;
 
     @FXML private TableView<Customers> customerTable;
@@ -296,8 +296,8 @@ public class HomeScreen implements Initializable {
         locCol.setCellValueFactory(new PropertyValueFactory<>("apptLocation"));
         contactCol.setCellValueFactory(new PropertyValueFactory<>("contactID"));
         typeCol.setCellValueFactory(new PropertyValueFactory<>("apptType"));
-        startCol.setCellValueFactory(new PropertyValueFactory<>("apptStart"));
-        endCol.setCellValueFactory(new PropertyValueFactory<>("apptEnd"));
+        startCol.setCellValueFactory(new PropertyValueFactory<>("Start"));
+        endCol.setCellValueFactory(new PropertyValueFactory<>("End"));
         customer_IDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         user_IDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
 

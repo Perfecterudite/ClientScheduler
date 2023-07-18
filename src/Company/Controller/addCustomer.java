@@ -42,7 +42,6 @@ public class addCustomer implements Initializable{
     @FXML private Button cancelCustomer;
 
     public void saveOnClick(ActionEvent event) throws IOException{
-        //This is testing something
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("ARE YOU SURE?");
@@ -52,16 +51,16 @@ public class addCustomer implements Initializable{
 
         if (result.isPresent() && result.get() == ButtonType.OK)
         {
-            int ID = 0;
-            for (Customers cust : DBCustomers.getAllCustomers()) {
+            //int ID = 0;
+           /** for (Customers cust : DBCustomers.getAllCustomers()) {
 
                 if (cust.getCustomerID() > ID)
 
                     ID = cust.getCustomerID();
 
-            }
+            }**/
 
-            customerID.setText(String.valueOf(++ID));
+            //customerID.setText(String.valueOf(++ID));
             String custName = customerName.getText();
             String addressTxt = address.getText();
             String postalCodeTxt = postalCode.getText();
