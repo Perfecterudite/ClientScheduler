@@ -51,16 +51,16 @@ public class addCustomer implements Initializable{
 
         if (result.isPresent() && result.get() == ButtonType.OK)
         {
-            //int ID = 0;
-           /** for (Customers cust : DBCustomers.getAllCustomers()) {
+            int ID = 0;
+            for (Customers cust : DBCustomers.getAllCustomers()) {
 
                 if (cust.getCustomerID() > ID)
 
                     ID = cust.getCustomerID();
 
-            }**/
+            }
 
-            //customerID.setText(String.valueOf(++ID));
+            customerID.setText(String.valueOf(++ID));
             String custName = customerName.getText();
             String addressTxt = address.getText();
             String postalCodeTxt = postalCode.getText();
@@ -154,19 +154,11 @@ public class addCustomer implements Initializable{
            }
            else {
                stateProvince.setDisable(false);
-              /** try {
-                   stateProvince.setItems(DBCustomer.getFilteredDivisions(countryBox.getValue()));
-               } catch (SQLException throwables) {
-                   throwables.printStackTrace();
-               }**/
-
            }
        });
 
    }
-
-
-
+   
     /**
      * This method initializes the 'ADD CUSTOMER' screen. It populates the country combobox, and clears the contents of the division combobox.
      *

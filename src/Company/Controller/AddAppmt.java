@@ -65,7 +65,7 @@ public class AddAppmt  implements Initializable{
 
         if (result.isPresent() && result.get() == ButtonType.OK)
         {
-            //int apptID = Appointment_ID.getText();
+            //int apptID = Appointment_ID.setText();
             Customers customer_Id = customer_ID.getValue();
             String titleTx = title.getText();
             String desc = description.getText();
@@ -86,11 +86,6 @@ public class AddAppmt  implements Initializable{
                 Timestamp start = Timestamp.valueOf(LocalDateTime.of( Sdate, startTime.getValue()));
                 Timestamp end = Timestamp.valueOf(LocalDateTime.of( Edate, endTime.getValue()));
 
-                //LocalDateTime start = LocalDateTime.Of(Sdate, startTime.getValue());
-                //LocalDateTime end = LocalDateTime.of( Edate, endTime.getValue());
-
-                //LocalDateTime;
-                //int cId = customer_Id;
 
 
                 if (LocalDateTime.of(Edate, endTime.getValue()).isAfter(LocalDateTime.of(Sdate, startTime.getValue())))

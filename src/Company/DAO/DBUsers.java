@@ -63,14 +63,14 @@ public class DBUsers {
             PreparedStatement ps = DatabaseConn.getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
 
-                rs.next();
-            {
-                if (rs.getString("User_Name").equals(username)) {
-                    if (rs.getString("Password").equals(password)) {
-                        return rs.getInt("User_ID");
-                    }
-                }
-            }
+               if( rs.next()) {
+                   if (rs.getString("User_Name").equals(username)) {
+                       if (rs.getString("Password").equals(password)) {
+                           return rs.getInt("User_ID");
+                       }
+                   }
+               }
+
         }
         catch (SQLException e)
         {

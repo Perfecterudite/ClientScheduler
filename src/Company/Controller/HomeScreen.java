@@ -74,15 +74,6 @@ public class HomeScreen implements Initializable {
         alert.setContentText("This will exit the screen, are you sure you want to continue?");
 
         Optional<ButtonType> result = alert.showAndWait();
-
-        /**if (result.isPresent() && result.get() == ButtonType.OK)
-        {
-            Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
-            Parent scene = FXMLLoader.load(getClass().getResource("View/mainLogin.fxml"));
-            stage.setScene(new Scene(scene));
-            stage.show();
-        }**/
-
         if (result.isPresent() && result.get() == ButtonType.OK) {
             ((Button)(event.getSource())).getScene().getWindow().hide();
         }
