@@ -2,6 +2,9 @@ package Company.Model;
 import java.time.LocalDateTime;
 import java.sql.Timestamp;
 
+/** This class handles the appointments.
+ *
+ **/
 public class Appointments {
     private int apptID;
     private String apptTitle;
@@ -13,6 +16,21 @@ public class Appointments {
     public int customerID;
     public int userID;
     public int contactID;
+
+
+    /** Constructor for building an appointment.
+     *
+     * @param apptID The id of the appointment.
+     * @param apptTitle The title of the appointment.
+     * @param apptDescription The description of the appointment.
+     * @param apptLocation The location of the appointment.
+     * @param contactID The contact id for the appointment.
+     * @param apptType The type of appointment.
+     * @param Start The start time and date of the appointment.
+     * @param End The end time and date of the appointment.
+     * @param customerID The customerID for the appointment.
+     * @param userID The userID for with the appointment.
+     */
 
     public Appointments(int apptID, String apptTitle, String apptDescription, String apptLocation, String apptType,
                         Timestamp Start, Timestamp End, int customerID, int userID, int contactID){
@@ -29,6 +47,7 @@ public class Appointments {
 
     }
 
+    //Getter
     public int getApptID(){
         return apptID;
     }

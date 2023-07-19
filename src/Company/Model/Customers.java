@@ -1,5 +1,9 @@
 package Company.Model;
 
+
+/** This class handles the customers.
+ *
+ **/
 public class Customers {
     private int customerID;
     private String customerName;
@@ -11,6 +15,17 @@ public class Customers {
     private int divisionID;
 
 
+    /** Constructor for building an customer.
+     *
+     * @param customerID The id of the customer.
+     * @param customerName The name of the customer.
+     * @param customerAddress The address of the customer.
+     * @param customerPostalCode The postal code of the customer.
+     * @param customerPhoneNumber The phone number of the customer.
+     * @param divisionID The division id for the customer.
+     * @param customerCountryID The country id for customer.
+     * @param divisionName The division name for the customer.
+     */
 
     public Customers(int customerID,String customerName, String customerAddress, String customerPostalCode, String customerPhoneNumber,
                          String divisionName, int customerCountryID, int divisionID){
@@ -25,6 +40,7 @@ public class Customers {
 
     }
 
+    //Getter
     public int getCustomerID(){
         return customerID;
     }
@@ -57,6 +73,7 @@ public class Customers {
     }
 
 
+    //Setter
     public void setCustomerID(){
         this.customerID = customerID;
     }

@@ -60,6 +60,12 @@ public class HomeScreen implements Initializable {
     @FXML private Button exit;
 
 
+    /**
+     * This method sends the user to the 'REPORTSS' screen.
+     *
+     * @param event clicking on the Reports button.
+     * @throws IOException The exception that will be thrown in an error.
+     */
     public void reportOnClick(ActionEvent event) throws IOException{
         Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         Parent scene = FXMLLoader.load(getClass().getResource("reports.fxml"));
@@ -68,6 +74,12 @@ public class HomeScreen implements Initializable {
 
     }
 
+    /**
+     * This method Exit the screen.
+     *
+     * @param event clicking on the Exit button.
+     * @throws IOException The exception that will be thrown in an error.
+     */
     public void exitOnClick(ActionEvent event) throws IOException{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText("ARE YOU SURE?");
@@ -79,6 +91,8 @@ public class HomeScreen implements Initializable {
         }
 
     }
+
+
     @FXML
     public void onViewAll(ActionEvent event)
     {
@@ -107,15 +121,27 @@ public class HomeScreen implements Initializable {
         appointmentTable.setItems(DBAppt.getWeekAppointments());
     }
 
+    /**
+     * This method sends the user to the Add appointment Form.
+     *
+     * @param event clicking on the Add button.
+     * @throws IOException The exception that will be thrown in an error.
+     */
+
     public void addApptOnClick(ActionEvent event) throws IOException{
         Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         Parent scene = FXMLLoader.load(getClass().getResource("addAppts.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
 
-
-
     }
+
+    /**
+     * This method sends the user to the Update appointment Form.
+     *
+     * @param event clicking on the Update button.
+     * @throws IOException The exception that will be thrown in an error.
+     */
 
     public void updateApptOnClick(ActionEvent event) throws IOException{
 
@@ -146,6 +172,14 @@ public class HomeScreen implements Initializable {
             stage.show();
         }
     }
+
+
+    /**
+     * This method delete the selected appointment row on the table.
+     *
+     * @param event clicking on the Delete button.
+     * @throws IOException The exception that will be thrown in an error.
+     */
     public void deleteApptOnClick(ActionEvent event) throws IOException{
 
         if (appointmentTable.getSelectionModel().isEmpty())
@@ -194,6 +228,13 @@ public class HomeScreen implements Initializable {
         }
     }
 
+
+    /**
+     * This method sends the user to the Add customer Form.
+     *
+     * @param event clicking on the Add button.
+     * @throws IOException The exception that will be thrown in an error.
+     */
     public void addCustomerOnClick(ActionEvent event) throws IOException{
         Stage stage = (Stage)((Button)event.getSource()).getScene().getWindow();
         Parent scene = FXMLLoader.load(getClass().getResource("addCustomer.fxml"));
@@ -202,6 +243,13 @@ public class HomeScreen implements Initializable {
 
     }
 
+
+    /**
+     * This method sends the user to the Update customer Form.
+     *
+     * @param event clicking on the update button.
+     * @throws IOException The exception that will be thrown in an error.
+     */
     public void updateCustomerOnClick(ActionEvent event) throws IOException{
 
         if (customerTable.getSelectionModel().isEmpty())
@@ -231,6 +279,13 @@ public class HomeScreen implements Initializable {
 
         }
     }
+
+    /**
+     * This method delete the selected customer row on the table
+     *
+     * @param event clicking on the Delete button.
+     * @throws IOException The exception that will be thrown in an error.
+     */
     public void deleteCustomerOnClick(ActionEvent event) throws IOException{
 
         if (customerTable.getSelectionModel().isEmpty())
@@ -278,6 +333,12 @@ public class HomeScreen implements Initializable {
         }
     }
 
+
+    /** This method initializes the Home screen.
+     *
+     * @param url The location.
+     * @param resourceBundle The resources.
+     */
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)

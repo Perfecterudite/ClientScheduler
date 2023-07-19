@@ -101,7 +101,7 @@ public class UpdateAppt implements Initializable{
                     }
                     else {
 
-                        DBAppt.updateAppointment(title, description, location, type, start, end, userId.getUserID(), customer_Id.getCustomerID(), appointment_Id, contact.getContactID());
+                        DBAppt.updateAppointment(title, description, location, type, start, end, userId.getUserID(), customer_Id.getCustomerID(), contact.getContactID(),  appointment_Id);
 
                         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                         Parent scene = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));

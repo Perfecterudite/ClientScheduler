@@ -7,6 +7,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
+/**
+ *
+ * @author
+ * Ayomide Adedeji
+ * aaded14@wgu.edu
+ * Student ID: 007440467
+ *
+ *
+ * This is a GUI based customer appointment scheduling application.
+ *
+ *
+ */
+
 public class Main extends Application {
 
     @Override

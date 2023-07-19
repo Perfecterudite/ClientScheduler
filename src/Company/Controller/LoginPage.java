@@ -74,7 +74,7 @@ public class LoginPage implements Initializable {
     }
 
     /**
-     * pressLogonButton
+     * press Login Button
      * attempts logon
      *
      * @param event Button Click
@@ -90,6 +90,7 @@ public class LoginPage implements Initializable {
             LocalDateTime ldt = LocalDateTime.now();
             String s = dtf.format(ldt);
 
+            //This method validates user's authentication
             int userId = DBUsers.validateUser(userName, passWord);
 
             FileWriter flWriter = new FileWriter("login_activity.txt", true);

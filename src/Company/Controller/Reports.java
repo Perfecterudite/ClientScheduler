@@ -53,7 +53,11 @@ public class Reports implements Initializable {
 
 
 
-
+    /** This method initializes the Report screen tableview.
+     *
+     * @param url The location.
+     * @param resourceBundle The resources.
+     */
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

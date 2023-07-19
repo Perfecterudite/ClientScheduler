@@ -41,6 +41,12 @@ public class addCustomer implements Initializable{
     @FXML private Button saveCustomer;
     @FXML private Button cancelCustomer;
 
+    /** This method saves the customer to the database, and directs back to the 'CUSTOMERS' screen. It gives errors if invalid data is entered.
+     *
+     * @param event clicking the save button.
+     * @throws IOException The exception that will be thrown in an error.
+     */
+
     public void saveOnClick(ActionEvent event) throws IOException{
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -49,18 +55,7 @@ public class addCustomer implements Initializable{
 
         Optional<ButtonType> result = alert.showAndWait();
 
-        if (result.isPresent() && result.get() == ButtonType.OK)
-        {
-            int ID = 0;
-            for (Customers cust : DBCustomers.getAllCustomers()) {
-
-                if (cust.getCustomerID() > ID)
-
-                    ID = cust.getCustomerID();
-
-            }
-
-            customerID.setText(String.valueOf(++ID));
+            //customerID.setText(String.valueOf(++ID));
             String custName = customerName.getText();
             String addressTxt = address.getText();
             String postalCodeTxt = postalCode.getText();
@@ -85,9 +80,16 @@ public class addCustomer implements Initializable{
                 alert3.setContentText("Please enter a valid value for each field! All fields are required.");
                 alert3.showAndWait();
             }
-        }
+
 
     }
+
+    /** This method cancels adding the customer, goes back to the 'CUSTOMERS' screen.
+     *
+     * @param event clicking the cancel button.
+     * @throws IOException The exception that will be thrown in an error.
+     */
+
 
     public void cancelOnClick(ActionEvent event) throws IOException{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -106,6 +108,12 @@ public class addCustomer implements Initializable{
 
     }
 
+
+    /**
+     * This method determines the content of the divisions label and populates the divisions combobox, based on the country combobox selection.
+     *
+     * @param event making a selection in the country combobox.
+     */
 
    public void divisionOnClick(ActionEvent event) {
         Country country = countryBox.getSelectionModel().getSelectedItem();
@@ -158,17 +166,4 @@ public class addCustomer implements Initializable{
        });
 
    }
-   
-    /**
-     * This method initializes the 'ADD CUSTOMER' screen. It populates the country combobox, and clears the contents of the division combobox.
-     *
-     * @param url the location.
-     * @param resourceBundle the resources.
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)
-    {
-        countryBox.setItems(DBCountries.getAllCountries());
-        stateProvince.getSelectionModel().clearSelection();
-    }**/
 }
