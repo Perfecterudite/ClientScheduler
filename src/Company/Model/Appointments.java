@@ -1,6 +1,8 @@
 package Company.Model;
 import java.time.LocalDateTime;
 import java.sql.Timestamp;
+import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 
 /** This class handles the appointments.
  *
@@ -47,6 +49,11 @@ public class Appointments {
 
     }
 
+    private static String displayDate(LocalDateTime date) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(date.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC")));
+    }
+
     //Getter
     public int getApptID(){
         return apptID;
@@ -67,7 +74,8 @@ public class Appointments {
     }
 
     public Timestamp getStart(){
-        return Start;
+        //return displayDate(Start)
+                return Start;
     }
 
     public Timestamp getEnd(){

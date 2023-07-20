@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
+import javafx.beans.property.SimpleStringProperty;
 import java.time.ZoneOffset;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +22,7 @@ import Company.DAO.DBAppt;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.*;
+import java.time.ZoneId;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
@@ -58,6 +60,7 @@ public class HomeScreen implements Initializable {
     @FXML private Button deleteAppt;
     @FXML private Button reports;
     @FXML private Button exit;
+
 
 
     /**
@@ -288,7 +291,10 @@ public class HomeScreen implements Initializable {
      */
     public void deleteCustomerOnClick(ActionEvent event) throws IOException{
 
-        if (customerTable.getSelectionModel().isEmpty())
+        Customers selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
+
+        //if (customerTable.getSelectionModel().isEmpty())
+        if(selectedCustomer == null)
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText("PLEASE SELECT A CUSTOMER.");
@@ -302,27 +308,33 @@ public class HomeScreen implements Initializable {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText("ARE YOU SURE?");
-            alert.setContentText("The customer and all related appointments will be deleted from the database, are you sure you want to continue? This action cannot be undone.");
+            alert.setContentText("The customer will be deleted from the database, are you sure you want to continue? This action cannot be undone.");
 
             Optional<ButtonType> result = alert.showAndWait();
 
             if (result.isPresent() && result.get() == ButtonType.OK)
             {
-                int customerId = customerTable.getSelectionModel().getSelectedItem().getCustomerID();
+                int customerId = selectedCustomer.getCustomerID();
+                Boolean dapp = DBCustomers.deleteCustomerAppt(customerId);
+                Boolean dcust = DBCustomers.deleteCustomer(customerId);
 
-                DBCustomers.deleteCustomerAppt(customerId);
-                DBCustomers.deleteCustomer(customerId);
+                if (dapp && dcust){
+                    customerTable.setItems(DBCustomers.getAllCustomers());
+                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                    alert2.setHeaderText("DELETED");
+                    alert2.setContentText("The selected customer was successfully deleted.");
+
+                    alert2.showAndWait();
+                }
+                else {
+                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                    alert2.setHeaderText("NOT DELETED");
+                    alert2.setContentText("Delete all related appointment to customer.");
+
+                    alert2.showAndWait();
+                }
 
 
-                customerTable.setItems(DBCustomers.getAllCustomers());
-
-
-
-                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                alert2.setHeaderText("DELETED");
-                alert2.setContentText("The selected customer was successfully deleted.");
-
-                alert2.showAndWait();
             }
             else
             {
@@ -334,6 +346,13 @@ public class HomeScreen implements Initializable {
             }
         }
     }
+
+    //Method for time display to local time zone
+
+    /**public static String displayDate(LocalDateTime date) {
+        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(date.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC")));
+    }**/
 
 
     /** This method initializes the Home screen.
@@ -358,6 +377,9 @@ public class HomeScreen implements Initializable {
         endCol.setCellValueFactory(new PropertyValueFactory<>("End"));
         customer_IDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         user_IDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
+
+        //startCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStart().format(formatDateTime)));
+        //endCol.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getEnd().format(formatDateTime)));
 
         appointmentTable.setItems(DBAppt.getAllAppointments());
 

@@ -132,7 +132,7 @@ public class DBCustomers {
      *
      * @param customerId The id of the customer.
      */
-    public static void deleteCustomer(int customerId)
+    public static Boolean deleteCustomer(int customerId)
     {
         try {
 
@@ -144,10 +144,13 @@ public class DBCustomers {
 
             psdc.execute();
 
+            return true;
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            System.out.println("Delete appointment first");
+            //e.printStackTrace();
+            return false;
         }
     }
 
@@ -157,22 +160,24 @@ public class DBCustomers {
      *
      * @param customerId The id of the customer.
      */
-    public static void deleteCustomerAppt(int customerId)
+    public static Boolean deleteCustomerAppt(int customerId)
     {
         try {
 
-            String sqlda = "DELETE from appointments where Customer_ID = ?";
+            String sqlda = "DELETE from appointments where Appointment_ID = ?";
 
             PreparedStatement psda = DatabaseConn.getConnection().prepareStatement(sqlda);
 
             psda.setInt(1, customerId);
 
             psda.execute();
+            return true;
 
         }
         catch (SQLException e)
         {
             e.printStackTrace();
+            return false;
         }
     }
 }
