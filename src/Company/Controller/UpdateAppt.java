@@ -101,7 +101,7 @@ public class UpdateAppt implements Initializable{
                     }
                     else {
 
-                        DBAppt.updateAppointment(title, description, location, type, start, end, userId.getUserID(), customer_Id.getCustomerID(), contact.getContactID(),  appointment_Id);
+                        DBAppt.updateAppointment(title, description, location, type, start, end, customer_Id.getCustomerID(), userId.getUserID(), contact.getContactID(),  appointment_Id);
 
                         Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
                         Parent scene = FXMLLoader.load(getClass().getResource("homeScreen.fxml"));
@@ -229,13 +229,13 @@ public class UpdateAppt implements Initializable{
         updateUser_ID.setItems(DBUsers.getAllUsers());
         updateCustomer_ID.setItems(DBCustomers.getAllCustomers());
 
-        LocalTime appointmentStartTimeMinEST = LocalTime.of(10, 0);
+        LocalTime appointmentStartTimeMinEST = LocalTime.of(8, 0);
         LocalDateTime startMinEST = LocalDateTime.of(LocalDate.now(), appointmentStartTimeMinEST);
         ZonedDateTime startMinZDT = startMinEST.atZone(ZoneId.of("America/New_York"));
         ZonedDateTime startMinLocal = startMinZDT.withZoneSameInstant(ZoneId.systemDefault());
         LocalTime appointmentStartTimeMin = startMinLocal.toLocalTime();
 
-        LocalTime appointmentStartTimeMaxEST = LocalTime.of(22, 40);
+        LocalTime appointmentStartTimeMaxEST = LocalTime.of(21, 45);
         LocalDateTime startMaxEST = LocalDateTime.of(LocalDate.now(), appointmentStartTimeMaxEST);
         ZonedDateTime startMaxZDT = startMaxEST.atZone(ZoneId.of("America/New_York"));
         ZonedDateTime startMaxLocal = startMaxZDT.withZoneSameInstant(ZoneId.systemDefault());
@@ -247,13 +247,13 @@ public class UpdateAppt implements Initializable{
             appointmentStartTimeMin = appointmentStartTimeMin.plusMinutes(15);
         }
 
-        LocalTime appointmentEndTimeMinEST = LocalTime.of(10, 15);
+        LocalTime appointmentEndTimeMinEST = LocalTime.of(8, 15);
         LocalDateTime endMinEST = LocalDateTime.of(LocalDate.now(), appointmentEndTimeMinEST);
         ZonedDateTime endMinZDT = endMinEST.atZone(ZoneId.of("America/New_York"));
         ZonedDateTime endMinLocal = endMinZDT.withZoneSameInstant(ZoneId.systemDefault());
         LocalTime appointmentEndTimeMin = endMinLocal.toLocalTime();
 
-        LocalTime appointmentEndTimeMaxEST = LocalTime.of(23, 0);
+        LocalTime appointmentEndTimeMaxEST = LocalTime.of(22, 0);
         LocalDateTime endMaxEST = LocalDateTime.of(LocalDate.now(), appointmentEndTimeMaxEST);
         ZonedDateTime endMaxZDT = endMaxEST.atZone(ZoneId.of("America/New_York"));
         ZonedDateTime endMaxLocal = endMaxZDT.withZoneSameInstant(ZoneId.systemDefault());

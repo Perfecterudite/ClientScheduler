@@ -136,15 +136,6 @@ public class DBCustomers {
     {
         try {
 
-            String sqlda = "DELETE from appointments where Customer_ID = ?";
-
-            PreparedStatement psda = DatabaseConn.getConnection().prepareStatement(sqlda);
-
-            psda.setInt(1, customerId);
-
-            psda.execute();
-
-
             String sqldc = "DELETE from customers where Customer_ID = ?";
 
             PreparedStatement psdc = DatabaseConn.getConnection().prepareStatement(sqldc);
@@ -152,6 +143,31 @@ public class DBCustomers {
             psdc.setInt(1, customerId);
 
             psdc.execute();
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * This method delete all appointments for a customer from the database.
+     *
+     * @param customerId The id of the customer.
+     */
+    public static void deleteCustomerAppt(int customerId)
+    {
+        try {
+
+            String sqlda = "DELETE from appointments where Customer_ID = ?";
+
+            PreparedStatement psda = DatabaseConn.getConnection().prepareStatement(sqlda);
+
+            psda.setInt(1, customerId);
+
+            psda.execute();
 
         }
         catch (SQLException e)

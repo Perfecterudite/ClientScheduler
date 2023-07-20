@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.Locale;
 import java.io.IOException;
 
 
@@ -143,9 +144,8 @@ public class LoginPage implements Initializable {
                 outputFile.close();
 
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("Invalid Login Data");
-                alert.setContentText("Please Enter Valid Username and Password!");
-
+                alert.setHeaderText(confirmSure);
+                alert.setContentText(confirmExit);
 
                 Optional<ButtonType> result = alert.showAndWait();
 
@@ -165,15 +165,15 @@ public class LoginPage implements Initializable {
      * This method initializes the 'LOGIN' screen. It utilizes a language resource bundle to allow for the entire screen to be translated to French, based on the locale of the local machine.
      *
      * @param url the location.
-     * @param resourceBundle the resources.
+     * @param rb the resources.
      */
     //@Override
-    public void initialize(URL url, ResourceBundle resourceBundle)
+    public void initialize(URL url, ResourceBundle rb)
     {
-        switchLabel.setText((ZoneId.systemDefault()).getId());
-        try
-        {
-            ResourceBundle rb = ResourceBundle.getBundle("languages/language", Locale.getDefault());
+        //switchLabel.setText((ZoneId.systemDefault()).getId());
+        //try
+       // {
+            rb = ResourceBundle.getBundle("Company.languages/language", Locale.getDefault());
 
             if (Locale.getDefault().getLanguage().equals("en") || Locale.getDefault().getLanguage().equals("fr"))
             {
@@ -188,10 +188,10 @@ public class LoginPage implements Initializable {
                 invalidLoginData = rb.getString("invalidLoginData");
                 pleaseEnterValid = rb.getString("pleaseEnterValid");
             }
-        }
-        catch (Exception e)
+        //}
+       /** catch (Exception e)
         {
             System.out.println();
-        }
+        }**/
     }
 }

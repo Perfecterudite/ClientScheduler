@@ -302,7 +302,7 @@ public class HomeScreen implements Initializable {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setHeaderText("ARE YOU SURE?");
-            alert.setContentText("The customer will be deleted from the database, are you sure you want to continue? This action cannot be undone.");
+            alert.setContentText("The customer and all related appointments will be deleted from the database, are you sure you want to continue? This action cannot be undone.");
 
             Optional<ButtonType> result = alert.showAndWait();
 
@@ -310,7 +310,9 @@ public class HomeScreen implements Initializable {
             {
                 int customerId = customerTable.getSelectionModel().getSelectedItem().getCustomerID();
 
+                DBCustomers.deleteCustomerAppt(customerId);
                 DBCustomers.deleteCustomer(customerId);
+
 
                 customerTable.setItems(DBCustomers.getAllCustomers());
 
