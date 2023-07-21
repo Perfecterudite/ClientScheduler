@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.ZoneId;
 
 public class DBAppt {
 
@@ -31,8 +33,10 @@ public class DBAppt {
             PreparedStatement ps = DatabaseConn.getConnection().prepareStatement(sqlgaa);
             ResultSet rs = ps.executeQuery();
 
+
             while (rs.next())
             {
+
 
                 int appointmentId = rs.getInt("Appointment_ID");
                 String title = rs.getString("Title");

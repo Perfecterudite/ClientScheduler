@@ -10,11 +10,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import javafx.beans.property.SimpleStringProperty;
-import java.time.ZoneOffset;
+
+import java.time.*;
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
+import java.time.zone.ZoneOffsetTransition;
 import Company.Model.Customers;
 import Company.DAO.DBCustomers;
 import Company.DAO.DBAppt;
@@ -22,7 +22,7 @@ import Company.DAO.DBAppt;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.util.*;
-import java.time.ZoneId;
+
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
@@ -349,10 +349,10 @@ public class HomeScreen implements Initializable {
 
     //Method for time display to local time zone
 
-    /**public static String displayDate(LocalDateTime date) {
+    public static String displayDate(LocalDateTime date) {
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return formatter.format(date.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC")));
-    }**/
+    }
 
 
     /** This method initializes the Home screen.
@@ -364,6 +364,8 @@ public class HomeScreen implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+
+        //ZonedDateTime utcZone = ZonedDateTime.of(startCol, zoneOffsetTransition.UTC);
 
         radioAll.setSelected(true);
 

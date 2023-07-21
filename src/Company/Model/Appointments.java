@@ -48,12 +48,6 @@ public class Appointments {
         this.contactID = contactID;
 
     }
-
-    private static String displayDate(LocalDateTime date) {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return formatter.format(date.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC")));
-    }
-
     //Getter
     public int getApptID(){
         return apptID;
