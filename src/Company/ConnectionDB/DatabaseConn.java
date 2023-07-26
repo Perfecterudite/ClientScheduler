@@ -13,7 +13,7 @@ public class DatabaseConn {
 
 
     //JDBC URL
-    private static String jdbcURL = protocol + vendorName +ipAddress + dbName;
+    private static String jdbcURL = protocol + vendorName +ipAddress + dbName + "?connectionTimeZone = SERVER";
 
     //Driver and Connection interface
     private static String mysqlJDBCDriver = "com.mysql.cj.jdbc.Driver";

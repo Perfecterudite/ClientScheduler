@@ -36,8 +36,8 @@ public class HomeScreen implements Initializable {
     @FXML private TableColumn <Appointments, String> typeCol;
     @FXML private TableColumn <Appointments, String> desCol;
     @FXML private TableColumn <Appointments, String> locCol;
-    @FXML private TableColumn <Appointments, LocalDateTime> startCol;
-    @FXML private TableColumn <Appointments, LocalDateTime> endCol;
+    @FXML private TableColumn <Appointments, String> startCol;
+    @FXML private TableColumn <Appointments, String> endCol;
     @FXML private TableColumn <Appointments, Integer> contactCol;
 
     @FXML private TableView<Customers> customerTable;
@@ -289,7 +289,7 @@ public class HomeScreen implements Initializable {
      * @param event clicking on the Delete button.
      * @throws IOException The exception that will be thrown in an error.
      */
-    public void deleteCustomerOnClick(ActionEvent event) throws IOException{
+    /**public void deleteCustomerOnClick(ActionEvent event) throws IOException{
 
         Customers selectedCustomer = customerTable.getSelectionModel().getSelectedItem();
 
@@ -316,7 +316,7 @@ public class HomeScreen implements Initializable {
             {
                 int customerId = selectedCustomer.getCustomerID();
                 Boolean dapp = DBCustomers.deleteCustomerAppt(customerId);
-                Boolean dcust = DBCustomers.deleteCustomer(customerId);
+                //Boolean dcust = DBCustomers.deleteCustomer(customerId);
 
                 if (dapp && dcust){
                     customerTable.setItems(DBCustomers.getAllCustomers());
@@ -345,7 +345,7 @@ public class HomeScreen implements Initializable {
                 alert3.showAndWait();
             }
         }
-    }
+    }**/
 
     //Method for time display to local time zone
 
@@ -353,6 +353,8 @@ public class HomeScreen implements Initializable {
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return formatter.format(date.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC")));
     }
+
+
 
 
     /** This method initializes the Home screen.
@@ -385,6 +387,8 @@ public class HomeScreen implements Initializable {
 
         appointmentTable.setItems(DBAppt.getAllAppointments());
 
+        //return displayDate(startCol);
+
 
 
 
@@ -396,6 +400,7 @@ public class HomeScreen implements Initializable {
         numberCol.setCellValueFactory(new PropertyValueFactory<>("customerPhoneNumber"));
 
         customerTable.setItems(DBCustomers.getAllCustomers());
+
     }
 
 }

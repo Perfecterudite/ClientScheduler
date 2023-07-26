@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import java.time.format.DateTimeFormatter;
 import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import java.io.IOException;
@@ -195,6 +196,9 @@ public class AddAppmt  implements Initializable{
             appointmentStartTimeMin = appointmentStartTimeMin.plusMinutes(15);
         }
 
+      //  ZonedDateTime zdtOut = appointmentStartTimeMax.atZone(ZoneId.of("UTC"));
+        //ZonedDateTime zdtOutToLocalTZ = zdtOut.withZoneSameInstant(ZoneId.of(ZoneId.systemDefault().toString()));
+        //LocalDateTime ldtOutFinal = zdtOutToLocalTZ.toLocalDateTime();
 
         LocalTime appointmentEndTimeMinEST = LocalTime.of(8, 15);
         LocalDateTime endMinEST = LocalDateTime.of(LocalDate.now(), appointmentEndTimeMinEST);

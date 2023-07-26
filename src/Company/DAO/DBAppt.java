@@ -34,6 +34,8 @@ public class DBAppt {
             ResultSet rs = ps.executeQuery();
 
 
+            final ZoneId est = ZoneId.of("America/New_York");
+
             while (rs.next())
             {
 
@@ -49,6 +51,7 @@ public class DBAppt {
                 int customerId = rs.getInt("Customer_ID");
                 int contactId = rs.getInt("Contact_ID");
                 int userId = rs.getInt("User_ID");
+
 
 
                 Appointments a = new Appointments(appointmentId, title, description, location, type, start, end, customerId, userId, contactId);
