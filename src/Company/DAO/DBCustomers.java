@@ -155,7 +155,6 @@ public class DBCustomers {
         }
         catch (SQLException e)
         {
-            //System.out.println("Delete appointment first");
             e.printStackTrace();
         }
     }

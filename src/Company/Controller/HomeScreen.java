@@ -347,14 +347,60 @@ public class HomeScreen implements Initializable {
         }
     }**/
 
-    //Method for time display to local time zone
 
-    public static String displayDate(LocalDateTime date) {
-        final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return formatter.format(date.atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC")));
+
+    /**
+     * This method deletes a customer from the database.
+     *
+     * @param event clicking on the delete customer button.
+     * @throws IOException The exception that will be thrown in an error.
+     */
+    @FXML
+    public void deleteCustomerOnClick(ActionEvent event) throws IOException {
+        if (customerTable.getSelectionModel().isEmpty())
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("PLEASE SELECT A CUSTOMER.");
+            alert.setContentText("No customer was selected to delete.");
+
+            Optional<ButtonType> result = alert.showAndWait();
+        }
+
+        else
+        {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("ARE YOU SURE?");
+            alert.setContentText("The customer and all associated appointments will be deleted from the database, are you sure you want to continue? This action cannot be undone.");
+
+            Optional<ButtonType> result = alert.showAndWait();
+
+            if (result.isPresent() && result.get() == ButtonType.OK)
+            {
+                int customerId = customerTable.getSelectionModel().getSelectedItem().getCustomerID();
+
+                DBCustomers.deleteCustomer(customerId);
+
+                customerTable.setItems(DBCustomers.getAllCustomers());
+
+                appointmentTable.setItems(DBAppt.getAllAppointments());
+
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setHeaderText("DELETED");
+                alert2.setContentText("The customer with ID: " + customerId + " was successfully deleted.");
+
+                alert2.showAndWait();
+            }
+            else
+            {
+                Alert alert3 = new Alert(Alert.AlertType.INFORMATION);
+                alert3.setHeaderText("NOT DELETED");
+                alert3.setContentText("The selected customer was not deleted.");
+
+                alert3.showAndWait();
+            }
+        }
     }
-
-
 
 
     /** This method initializes the Home screen.
@@ -366,8 +412,6 @@ public class HomeScreen implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
-
-        //ZonedDateTime utcZone = ZonedDateTime.of(startCol, zoneOffsetTransition.UTC);
 
         radioAll.setSelected(true);
 
@@ -382,8 +426,6 @@ public class HomeScreen implements Initializable {
         customer_IDCol.setCellValueFactory(new PropertyValueFactory<>("customerID"));
         user_IDCol.setCellValueFactory(new PropertyValueFactory<>("userID"));
 
-        //startCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getStart().format(formatDateTime)));
-        //endCol.setCellValueFactory(cellData ->  new SimpleStringProperty(cellData.getValue().getEnd().format(formatDateTime)));
 
         appointmentTable.setItems(DBAppt.getAllAppointments());
 

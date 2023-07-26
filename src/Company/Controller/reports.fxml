@@ -18,17 +18,17 @@
                   <Font name="System Bold" size="32.0" />
                </font>
             </Label>
-            <TableView fx:id="reportsTable" layoutX="50.0" layoutY="110.0" prefHeight="146.0" prefWidth="759.0">
+            <TableView fx:id="reportsTable" layoutX="22.0" layoutY="110.0" prefHeight="146.0" prefWidth="840.0">
                <columns>
                   <TableColumn fx:id="reportIDCol" prefWidth="62.0" text="ID" />
                   <TableColumn fx:id="reportTitleCol" prefWidth="88.0" text="Title" />
                   <TableColumn fx:id="reportTypeCol" prefWidth="75.0" text="Type" />
                   <TableColumn fx:id="reportDesCol" prefWidth="121.0" text="Description" />
                   <TableColumn fx:id="reportLocCol" prefWidth="64.0" text="Location" />
-                  <TableColumn fx:id="reportStartCol" prefWidth="101.0" text="Start Date/Time" />
-                  <TableColumn fx:id="reportEndCol" prefWidth="92.0" text="End Date/Time" />
-                  <TableColumn fx:id="reportContactCol" prefWidth="58.0" text="Contact" />
-                  <TableColumn fx:id="reportCusIDCol" prefWidth="97.0" text="Customer ID" />
+                  <TableColumn fx:id="reportStartCol" prefWidth="141.0" text="Start Date/Time" />
+                  <TableColumn fx:id="reportEndCol" prefWidth="129.0" text="End Date/Time" />
+                  <TableColumn fx:id="reportContactCol" prefWidth="61.0" text="Contact" />
+                  <TableColumn fx:id="reportCusIDCol" prefWidth="98.0" text="Customer ID" />
                </columns>
             </TableView>
             <Button fx:id="backBtn" layoutX="742.0" layoutY="470.0" mnemonicParsing="false" onAction="#backOnClick" text="Back">
